@@ -88,6 +88,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "فحص الظهور في ChatGPT | Swift Mind" },
+      { name: "description", content: "Swift Mind's ChatGPT Visibility Report analyzes websites for AI and SEO potential." },
+      { property: "og:description", content: "Swift Mind's ChatGPT Visibility Report analyzes websites for AI and SEO potential." },
+      { name: "twitter:description", content: "Swift Mind's ChatGPT Visibility Report analyzes websites for AI and SEO potential." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eefcc811-17c9-479a-a597-74718cbf4b95/id-preview-370fedac--90d1c683-d701-4668-8d66-42a856a8e82d.lovable.app-1780309269428.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eefcc811-17c9-479a-a597-74718cbf4b95/id-preview-370fedac--90d1c683-d701-4668-8d66-42a856a8e82d.lovable.app-1780309269428.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
