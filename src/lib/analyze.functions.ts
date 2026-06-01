@@ -237,7 +237,7 @@ export const startAnalysis = createServerFn({ method: "POST" })
           seo_score: Math.round(report.scores.seo),
           content_score: Math.round(report.scores.content),
           authority_score: Math.round(report.scores.authority),
-          report: report as unknown as Record<string, unknown>,
+          report: report as unknown as never,
           crawl_data: {
             homeUrl: crawl.homeUrl,
             pagesCount: crawl.pages.length,
