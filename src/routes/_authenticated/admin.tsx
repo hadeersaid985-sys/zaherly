@@ -162,15 +162,24 @@ function AdminPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-3">
+        <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <BrandLogo className="h-12 md:h-14 w-auto" />
-            <span className="text-sm text-muted-foreground hidden sm:inline">لوحة المسؤول</span>
+            <BrandLogo className="h-10 sm:h-12 md:h-14 w-auto" />
+            <span className="text-sm text-muted-foreground hidden md:inline">لوحة المسؤول</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="default" size="sm" onClick={exportXlsx} className="bg-gradient-hero"><FileSpreadsheet className="size-4 me-2" />تصدير Excel</Button>
-            <Button variant="outline" size="sm" onClick={exportCsv}><Download className="size-4 me-2" />CSV</Button>
-            <Button variant="ghost" size="sm" onClick={signOut}><LogOut className="size-4 me-2" />خروج</Button>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Button variant="default" size="sm" onClick={exportXlsx} className="bg-gradient-hero px-2 sm:px-3" aria-label="تصدير Excel">
+              <FileSpreadsheet className="size-4 sm:me-2" />
+              <span className="hidden sm:inline">Excel</span>
+            </Button>
+            <Button variant="outline" size="sm" onClick={exportCsv} className="px-2 sm:px-3" aria-label="تصدير CSV">
+              <Download className="size-4 sm:me-2" />
+              <span className="hidden sm:inline">CSV</span>
+            </Button>
+            <Button variant="ghost" size="sm" onClick={signOut} className="px-2 sm:px-3" aria-label="تسجيل خروج">
+              <LogOut className="size-4 sm:me-2" />
+              <span className="hidden sm:inline">خروج</span>
+            </Button>
           </div>
         </div>
       </header>

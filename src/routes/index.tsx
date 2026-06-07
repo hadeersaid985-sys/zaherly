@@ -57,11 +57,11 @@ function HomePage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-3">
+        <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-2">
           <div className="flex items-center min-w-0">
-            <BrandLogo className="h-12 md:h-14 w-auto" />
+            <BrandLogo className="h-10 sm:h-12 md:h-14 w-auto" />
           </div>
-          <a href="/login" className="text-sm text-muted-foreground hover:text-foreground">دخول المسؤول</a>
+          <a href="/login" className="text-xs sm:text-sm text-muted-foreground hover:text-foreground whitespace-nowrap">دخول المسؤول</a>
         </div>
       </header>
 

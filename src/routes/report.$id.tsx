@@ -91,17 +91,18 @@ function ReportPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-50 no-print">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-3">
-          <Link to="/" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground shrink-0">
+        <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-2">
+          <Link to="/" className="flex items-center gap-1 sm:gap-2 text-sm text-muted-foreground hover:text-foreground shrink-0">
             <ArrowLeft className="size-4" />
-            الرئيسية
+            <span className="hidden sm:inline">الرئيسية</span>
           </Link>
           <div className="flex items-center min-w-0">
-            <BrandLogo className="h-12 md:h-14 w-auto" />
+            <BrandLogo className="h-10 sm:h-12 md:h-14 w-auto" />
           </div>
-          <Button onClick={() => window.print()} size="sm" className="gap-2">
+          <Button onClick={() => window.print()} size="sm" className="gap-1 sm:gap-2 px-2 sm:px-3">
             <Download className="size-4" />
-            تحميل PDF
+            <span className="hidden sm:inline">تحميل PDF</span>
+            <span className="sm:hidden">PDF</span>
           </Button>
         </div>
       </header>
