@@ -227,7 +227,7 @@ function ReportPage() {
                   href={WHATSAPP_LINK(p.msg)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="no-print inline-flex items-center justify-center gap-2 w-full bg-[#25D366] text-white font-bold py-3 rounded-lg hover:opacity-90 transition"
+                  className="no-print inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-[#FF3D7F] to-[#FF8A00] text-white font-bold py-3 rounded-lg shadow-lg shadow-[#FF3D7F]/30 hover:scale-[1.02] transition-transform"
                 >
                   <MessageCircle className="size-5" />
                   للبدء في خطة العمل تواصل معنا للحجز
@@ -235,7 +235,14 @@ function ReportPage() {
               </div>
             ))}
           </div>
+          <div className="mt-5 p-4 rounded-lg border-2 border-dashed border-[#FF3D7F]/40 bg-[#FF3D7F]/5 text-center">
+            <p className="text-sm md:text-base font-semibold">
+              لو حابب أبعتلك خطة الإصلاح أو أشرح النتيجة في مكالمة ١٥ دقيقة، ابعت{" "}
+              <span className="text-[#FF3D7F] font-extrabold">"موافق"</span>
+            </p>
+          </div>
         </Card>
+
 
         {/* Recommendations */}
         <div className="grid md:grid-cols-2 gap-6">
