@@ -32,23 +32,72 @@ export interface CrawlResult {
 
 const UA = "Mozilla/5.0 (compatible; SwiftMindBot/1.0; +https://swiftmind.ai)";
 const TIMEOUT_MS = 8000;
+const MAX_REDIRECTS = 5;
 
-async function fetchText(url: string): Promise<string | null> {
+export function isPrivateHostname(host: string): boolean {
+  const h = host.toLowerCase().replace(/^\[|\]$/g, "");
+  if (!h) return true;
+  if (h === "localhost" || h.endsWith(".localhost") || h.endsWith(".local") || h.endsWith(".internal")) return true;
+  const ipv4 = h.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (ipv4) {
+    const [a, b] = ipv4.slice(1).map(Number);
+    if (a === 0) return true;
+    if (a === 10) return true;
+    if (a === 127) return true;
+    if (a === 169 && b === 254) return true;
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 192 && b === 168) return true;
+    if (a === 100 && b >= 64 && b <= 127) return true;
+    if (a >= 224) return true;
+    return false;
+  }
+  // Reject any IPv6 literal (loopback, link-local, ULA, mapped, etc.)
+  if (h.includes(":")) return true;
+  return false;
+}
+
+export function validatePublicUrl(raw: string): URL | null {
+  let u: URL;
   try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
-    const res = await fetch(url, {
-      headers: { "User-Agent": UA, Accept: "text/html,application/xhtml+xml" },
-      signal: ctrl.signal,
-      redirect: "follow",
-    });
-    clearTimeout(t);
-    if (!res.ok) return null;
-    const ct = res.headers.get("content-type") || "";
-    if (!ct.includes("text") && !ct.includes("xml") && !ct.includes("html")) return null;
-    return await res.text();
+    u = new URL(raw);
   } catch {
     return null;
+  }
+  if (u.protocol !== "http:" && u.protocol !== "https:") return null;
+  if (!u.hostname || isPrivateHostname(u.hostname)) return null;
+  return u;
+}
+
+async function fetchText(url: string): Promise<string | null> {
+  let current = validatePublicUrl(url);
+  if (!current) return null;
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+  try {
+    for (let i = 0; i <= MAX_REDIRECTS; i++) {
+      const res = await fetch(current.toString(), {
+        headers: { "User-Agent": UA, Accept: "text/html,application/xhtml+xml" },
+        signal: ctrl.signal,
+        redirect: "manual",
+      });
+      if (res.status >= 300 && res.status < 400) {
+        const loc = res.headers.get("location");
+        if (!loc) return null;
+        const next = validatePublicUrl(new URL(loc, current).toString());
+        if (!next) return null;
+        current = next;
+        continue;
+      }
+      if (!res.ok) return null;
+      const ct = res.headers.get("content-type") || "";
+      if (!ct.includes("text") && !ct.includes("xml") && !ct.includes("html")) return null;
+      return await res.text();
+    }
+    return null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(t);
   }
 }
 
@@ -161,7 +210,8 @@ function categorize(url: string): string | null {
 export async function crawlWebsite(rawUrl: string): Promise<CrawlResult> {
   let homeUrl = rawUrl.trim();
   if (!/^https?:\/\//i.test(homeUrl)) homeUrl = "https://" + homeUrl;
-  const home = new URL(homeUrl);
+  const home = validatePublicUrl(homeUrl);
+  if (!home) throw new Error("الرابط غير صالح أو غير مسموح به");
   const baseHost = home.host;
   const origin = home.origin;
 

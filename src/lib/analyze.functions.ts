@@ -270,7 +270,9 @@ export const getReport = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const { data: lead, error } = await supabaseAdmin
       .from("leads")
-      .select("*")
+      .select(
+        "id, website_url, business_type, name, ai_visibility_score, geo_score, seo_score, content_score, authority_score, report, crawl_data, status, created_at",
+      )
       .eq("id", data.id)
       .single();
     if (error || !lead) throw new Error("التقرير غير موجود");
