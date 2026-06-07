@@ -98,8 +98,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", sizes: "any", href: "/__l5e/assets-v1/72054a21-8850-4d6f-9295-132536ad4b7e/swiftmynd-favicon.png" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/__l5e/assets-v1/72054a21-8850-4d6f-9295-132536ad4b7e/swiftmynd-favicon.png" },
+      { rel: "icon", type: "image/png", sizes: "any", href: "/__l5e/assets-v1/00e5d39a-168c-495f-88f6-c4d0017b9c5d/swiftmynd-favicon.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/__l5e/assets-v1/00e5d39a-168c-495f-88f6-c4d0017b9c5d/swiftmynd-favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
