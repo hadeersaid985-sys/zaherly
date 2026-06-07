@@ -7,8 +7,9 @@ const InputSchema = z.object({
   websiteUrl: z.string().trim().min(3).max(500),
   businessType: z.string().trim().min(2).max(200),
   name: z.string().trim().min(2).max(150),
-  email: z.string().trim().email().max(255),
+  email: z.string().trim().email().max(255).optional().or(z.literal("")),
   phone: z.string().trim().min(4).max(40).optional().or(z.literal("")),
+  marketingConsent: z.boolean().optional().default(false),
 });
 
 export interface AnalysisReport {
@@ -216,7 +217,7 @@ export const startAnalysis = createServerFn({ method: "POST" })
         website_url: data.websiteUrl,
         business_type: data.businessType,
         name: data.name,
-        email: data.email,
+        email: data.email || null,
         phone: data.phone || null,
         status: "processing",
       })
