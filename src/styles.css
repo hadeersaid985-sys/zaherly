@@ -155,7 +155,22 @@
 }
 
 @media print {
+  /* Preserve colors and gradients in PDF export */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  html, body {
+    background: white !important;
+  }
   .no-print { display: none !important; }
-  body { background: white !important; }
   .print-break { page-break-before: always; }
+  /* Hide Lovable editor badge / overlays in print */
+  #lovable-badge,
+  [data-lovable-badge],
+  [class*="lovable-badge"],
+  iframe[src*="lovable"] {
+    display: none !important;
+  }
 }
