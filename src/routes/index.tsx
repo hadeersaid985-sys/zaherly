@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Sparkles, Search, FileText, Bot, TrendingUp, Globe } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { WhatsAppFloat } from "@/components/whatsapp-float";
+import { WHATSAPP_LINK } from "@/lib/contact";
+import { Sparkles, Search, FileText, Bot, TrendingUp, Globe, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,6 +35,7 @@ function HomePage() {
     name: "",
     email: "",
     phone: "",
+    marketingConsent: false,
   });
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -150,16 +154,25 @@ function HomePage() {
                 </div>
               </div>
               <div>
-                <Label htmlFor="email">البريد الإلكتروني *</Label>
+                <Label htmlFor="email">البريد الإلكتروني <span className="text-muted-foreground">(اختياري)</span></Label>
                 <Input
                   id="email"
                   type="email"
-                  required
                   dir="ltr"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
               </div>
+              <label className="flex items-start gap-2 text-sm leading-relaxed cursor-pointer select-none">
+                <Checkbox
+                  checked={form.marketingConsent}
+                  onCheckedChange={(v) => setForm({ ...form, marketingConsent: v === true })}
+                  className="mt-1"
+                />
+                <span className="text-muted-foreground">
+                  أوافق على تلقي عروض Swift Mind وخدماتها عبر الواتساب أو البريد الإلكتروني.
+                </span>
+              </label>
               <Button
                 type="submit"
                 disabled={loading}
@@ -211,11 +224,28 @@ function HomePage() {
         </div>
       </section>
 
+      <section className="container mx-auto px-4 pb-16">
+        <Card className="p-8 md:p-10 bg-gradient-hero text-white shadow-elegant text-center">
+          <h3 className="text-2xl md:text-3xl font-bold mb-3">للبدء في خطة العمل تواصل معنا للحجز</h3>
+          <p className="opacity-95 mb-6">فريق Swift Mind جاهز للرد على استفساراتك خلال دقائق عبر الواتساب.</p>
+          <a
+            href={WHATSAPP_LINK("مرحباً Swift Mind، أرغب في الحجز والاستفسار عن خطط العمل")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
+          >
+            <MessageCircle className="size-5" />
+            كلمنا دلوقتي على واتساب
+          </a>
+        </Card>
+      </section>
+
       <footer className="border-t border-border/50 mt-10">
         <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} Swift Mind — جميع الحقوق محفوظة
         </div>
       </footer>
+      <WhatsAppFloat />
     </div>
   );
 }
