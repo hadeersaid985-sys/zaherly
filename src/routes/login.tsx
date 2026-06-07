@@ -54,9 +54,8 @@ function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-background">
       <Card className="p-8 w-full max-w-md shadow-elegant">
-        <Link to="/" className="flex items-center gap-3 justify-center mb-6">
-          <BrandLogo className="h-12 w-auto" />
-          <span className="font-bold text-lg">Swift Mynd</span>
+        <Link to="/" className="flex items-center justify-center mb-6">
+          <BrandLogo className="h-14 w-auto" />
         </Link>
         <h1 className="text-2xl font-bold text-center mb-2">
           {mode === "signin" ? "دخول لوحة المسؤول" : "إنشاء حساب مسؤول"}
