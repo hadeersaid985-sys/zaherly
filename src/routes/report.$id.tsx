@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getReport, type AnalysisReport } from "@/lib/analyze.functions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { BrandLogo } from "@/components/brand-logo";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -96,8 +97,8 @@ function ReportPage() {
             الرئيسية
           </Link>
           <div className="flex items-center gap-2">
-            <Sparkles className="size-5 text-primary" />
-            <span className="font-bold">Swift Mind</span>
+            <BrandLogo className="h-8 w-auto" />
+            <span className="font-bold">Swift Mynd</span>
           </div>
           <Button onClick={() => window.print()} size="sm" className="gap-2">
             <Download className="size-4" />

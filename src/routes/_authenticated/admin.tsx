@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { BrandLogo } from "@/components/brand-logo";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
@@ -163,8 +164,8 @@ function AdminPage() {
       <header className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="size-5 text-primary" />
-            <span className="font-bold">Swift Mind — لوحة المسؤول</span>
+            <BrandLogo className="h-8 w-auto" />
+            <span className="font-bold">Swift Mynd — لوحة المسؤول</span>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="default" size="sm" onClick={exportXlsx} className="bg-gradient-hero"><FileSpreadsheet className="size-4 me-2" />تصدير Excel</Button>

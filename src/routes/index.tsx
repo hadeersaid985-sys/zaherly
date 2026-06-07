@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { startAnalysis } from "@/lib/analyze.functions";
 import { Button } from "@/components/ui/button";
+import { BrandLogo } from "@/components/brand-logo";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
@@ -57,12 +58,10 @@ function HomePage() {
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="size-9 rounded-xl bg-gradient-hero flex items-center justify-center shadow-glow">
-              <Sparkles className="size-5 text-white" />
-            </div>
+          <div className="flex items-center gap-3">
+            <BrandLogo className="h-10 w-auto" />
             <div>
-              <div className="font-bold text-lg leading-tight">Swift Mind</div>
+              <div className="font-bold text-lg leading-tight">Swift Mynd</div>
               <div className="text-xs text-muted-foreground leading-tight">فحص الظهور في ChatGPT</div>
             </div>
           </div>
