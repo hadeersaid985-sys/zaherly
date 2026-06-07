@@ -139,10 +139,11 @@ function HomePage() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="phone">رقم الجوال</Label>
+                  <Label htmlFor="phone">رقم الجوال *</Label>
                   <Input
                     id="phone"
                     dir="ltr"
+                    required
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   />

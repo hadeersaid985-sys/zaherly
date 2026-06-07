@@ -8,7 +8,7 @@ const InputSchema = z.object({
   businessType: z.string().trim().min(2).max(200),
   name: z.string().trim().min(2).max(150),
   email: z.string().trim().email().max(255).optional().or(z.literal("")),
-  phone: z.string().trim().min(4).max(40).optional().or(z.literal("")),
+  phone: z.string().trim().min(4).max(40),
   marketingConsent: z.boolean().optional().default(false),
 });
 
