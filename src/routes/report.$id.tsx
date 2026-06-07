@@ -96,9 +96,8 @@ function ReportPage() {
             <ArrowLeft className="size-4" />
             الرئيسية
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <BrandLogo className="h-8 w-auto" />
-            <span className="font-bold">Swift Mynd</span>
           </div>
           <Button onClick={() => window.print()} size="sm" className="gap-2">
             <Download className="size-4" />
