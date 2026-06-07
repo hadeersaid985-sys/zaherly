@@ -210,7 +210,8 @@ function categorize(url: string): string | null {
 export async function crawlWebsite(rawUrl: string): Promise<CrawlResult> {
   let homeUrl = rawUrl.trim();
   if (!/^https?:\/\//i.test(homeUrl)) homeUrl = "https://" + homeUrl;
-  const home = new URL(homeUrl);
+  const home = validatePublicUrl(homeUrl);
+  if (!home) throw new Error("الرابط غير صالح أو غير مسموح به");
   const baseHost = home.host;
   const origin = home.origin;
 
