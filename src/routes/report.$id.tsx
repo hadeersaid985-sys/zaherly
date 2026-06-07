@@ -12,7 +12,9 @@ import {
 import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
 } from "recharts";
-import { Bot, Download, CheckCircle2, AlertTriangle, Sparkles, FileText, Calendar, ArrowLeft } from "lucide-react";
+import { Bot, Download, CheckCircle2, AlertTriangle, Sparkles, FileText, Calendar, ArrowLeft, MessageCircle } from "lucide-react";
+
+import { WHATSAPP_LINK, PRICING } from "@/lib/contact";
 
 export const Route = createFileRoute("/report/$id")({
   loader: async ({ params, context }) => {
@@ -246,34 +248,75 @@ function ReportPage() {
           </div>
         </Card>
 
-        {/* Action plan */}
+        {/* Action plan — two paid plans */}
         <Card className="p-6 print-break">
           <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
             <Calendar className="size-5 text-primary" />
-            خطة العمل (٣٠ / ٦٠ / ٩٠ يوماً)
+            خطط العمل مع Swift Mind
           </h3>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
             {[
-              { t: "٣٠ يوم — الأساسيات", items: report.actionPlan.days30, color: "bg-primary/10 border-primary/30" },
-              { t: "٦٠ يوم — التوسع", items: report.actionPlan.days60, color: "bg-chart-2/10 border-chart-2/30" },
-              { t: "٩٠ يوم — الصدارة", items: report.actionPlan.days90, color: "bg-success/10 border-success/30" },
+              {
+                t: "خطة ٣٠ يوم — الأساسيات",
+                price: PRICING.plan30.price,
+                currency: PRICING.plan30.currency,
+                items: report.actionPlan.days30,
+                color: "bg-primary/10 border-primary/30",
+                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٣٠ يوم (${PRICING.plan30.price} ${PRICING.plan30.currency})`,
+              },
+              {
+                t: "خطة ٦٠ يوم — التوسع",
+                price: PRICING.plan60.price,
+                currency: PRICING.plan60.currency,
+                items: [...report.actionPlan.days30, ...report.actionPlan.days60],
+                color: "bg-chart-2/10 border-chart-2/30",
+                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٦٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency})`,
+              },
             ].map((p) => (
-              <div key={p.t} className={`p-4 rounded-xl border-2 ${p.color}`}>
-                <div className="font-bold mb-3">{p.t}</div>
-                <ul className="space-y-2 text-sm">
-                  {p.items.map((it, i) => (
+              <div key={p.t} className={`p-5 rounded-xl border-2 ${p.color} flex flex-col`}>
+                <div className="font-bold text-lg mb-1">{p.t}</div>
+                <div className="text-3xl font-extrabold text-primary mb-3">
+                  {p.price.toLocaleString("ar-EG")} <span className="text-base font-normal text-muted-foreground">{p.currency}</span>
+                </div>
+                <ul className="space-y-2 text-sm flex-1 mb-4">
+                  {p.items.slice(0, 8).map((it, i) => (
                     <li key={i} className="flex gap-2"><span>◉</span><span>{it}</span></li>
                   ))}
                 </ul>
+                <a
+                  href={WHATSAPP_LINK(p.msg)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="no-print inline-flex items-center justify-center gap-2 w-full bg-[#25D366] text-white font-bold py-3 rounded-lg hover:opacity-90 transition"
+                >
+                  <MessageCircle className="size-5" />
+                  للبدء في خطة العمل تواصل معنا للحجز
+                </a>
               </div>
             ))}
           </div>
+        </Card>
+
+        {/* Contact CTA */}
+        <Card className="p-8 bg-gradient-hero text-white text-center no-print">
+          <h3 className="text-2xl font-bold mb-2">مزيد من التحليل المفصل؟ كلمنا دلوقتي</h3>
+          <p className="opacity-95 mb-5">احصل على استشارة مفصلة من فريق Swift Mind وخطة مخصصة لنشاطك.</p>
+          <a
+            href={WHATSAPP_LINK("مرحباً Swift Mind، أحتاج تحليلاً أكثر تفصيلاً لموقعي")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
+          >
+            <MessageCircle className="size-5" />
+            للتواصل معنا كلمنا دلوقتي
+          </a>
         </Card>
 
         <div className="text-center text-sm text-muted-foreground py-6 border-t border-border/50">
           تم إعداد هذا التقرير بواسطة Swift Mind • {new Date().toLocaleDateString("ar")}
         </div>
       </div>
+      
     </div>
   );
 }

@@ -22,9 +22,10 @@ export type Database = {
           content_score: number | null
           crawl_data: Json | null
           created_at: string
-          email: string
+          email: string | null
           geo_score: number | null
           id: string
+          marketing_consent: boolean
           name: string
           phone: string | null
           report: Json | null
@@ -39,9 +40,10 @@ export type Database = {
           content_score?: number | null
           crawl_data?: Json | null
           created_at?: string
-          email: string
+          email?: string | null
           geo_score?: number | null
           id?: string
+          marketing_consent?: boolean
           name: string
           phone?: string | null
           report?: Json | null
@@ -56,9 +58,10 @@ export type Database = {
           content_score?: number | null
           crawl_data?: Json | null
           created_at?: string
-          email?: string
+          email?: string | null
           geo_score?: number | null
           id?: string
+          marketing_consent?: boolean
           name?: string
           phone?: string | null
           report?: Json | null
