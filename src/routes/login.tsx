@@ -76,13 +76,6 @@ function LoginPage() {
             {loading ? "جاري..." : mode === "signin" ? "دخول" : "إنشاء حساب"}
           </Button>
         </form>
-        <button
-          type="button"
-          onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-          className="w-full text-sm text-muted-foreground hover:text-foreground mt-4"
-        >
-          {mode === "signin" ? "لا تملك حساباً؟ سجّل الآن" : "لديك حساب؟ سجّل دخول"}
-        </button>
       </Card>
     </div>
   );
