@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { WhatsAppFloat } from "@/components/whatsapp-float";
+
 import { WHATSAPP_LINK } from "@/lib/contact";
 import { Sparkles, Search, FileText, Bot, TrendingUp, Globe, MessageCircle } from "lucide-react";
 
