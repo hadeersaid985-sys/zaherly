@@ -96,8 +96,8 @@ function ReportPage() {
             الرئيسية
           </Link>
           <div className="flex items-center gap-2">
-            <Sparkles className="size-5 text-primary" />
-            <span className="font-bold">Swift Mind</span>
+            <BrandLogo className="h-8 w-auto" />
+            <span className="font-bold">Swift Mynd</span>
           </div>
           <Button onClick={() => window.print()} size="sm" className="gap-2">
             <Download className="size-4" />
