@@ -162,9 +162,9 @@ function AdminPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 h-14 md:h-16 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <BrandLogo className="h-10 md:h-12 w-auto" />
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <BrandLogo className="h-12 md:h-14 w-auto" />
             <span className="text-sm text-muted-foreground hidden sm:inline">لوحة المسؤول</span>
           </div>
           <div className="flex items-center gap-2">
