@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Download, LogOut, Search, Sparkles, ExternalLink } from "lucide-react";
+import { Download, LogOut, Search, Sparkles, ExternalLink, FileSpreadsheet } from "lucide-react";
+import * as XLSX from "xlsx";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "لوحة المسؤول — Swift Mind" }] }),
@@ -21,11 +22,14 @@ type Lead = {
   website_url: string;
   business_type: string;
   name: string;
-  email: string;
+  email: string | null;
   phone: string | null;
+  marketing_consent?: boolean;
   ai_visibility_score: number | null;
   geo_score: number | null;
   seo_score: number | null;
+  content_score?: number | null;
+  authority_score?: number | null;
   status: string;
   created_at: string;
 };
@@ -93,21 +97,46 @@ function AdminPage() {
     window.location.href = "/login";
   };
 
+  const rowsForExport = () =>
+    leads.map((l) => ({
+      "الاسم": l.name,
+      "البريد الإلكتروني": l.email ?? "",
+      "رقم الجوال": l.phone ?? "",
+      "موافقة على العروض": l.marketing_consent ? "نعم" : "لا",
+      "رابط الموقع": l.website_url,
+      "نوع النشاط": l.business_type,
+      "نتيجة AI": l.ai_visibility_score ?? "",
+      "نتيجة GEO": l.geo_score ?? "",
+      "نتيجة SEO": l.seo_score ?? "",
+      "جودة المحتوى": l.content_score ?? "",
+      "الموثوقية": l.authority_score ?? "",
+      "الحالة": l.status,
+      "التاريخ": new Date(l.created_at).toLocaleString("ar-EG"),
+      "رابط التقرير": `${window.location.origin}/report/${l.id}`,
+      "ID": l.id,
+    }));
+
+  const exportXlsx = () => {
+    const rows = rowsForExport();
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws["!cols"] = Object.keys(rows[0] ?? {}).map((k) => ({ wch: Math.max(14, k.length + 4) }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Leads");
+    XLSX.writeFile(wb, `swiftmind-leads-${new Date().toISOString().slice(0, 10)}.xlsx`);
+  };
+
   const exportCsv = () => {
-    const rows = [
-      ["ID", "Name", "Email", "Phone", "Website", "Business", "AI", "GEO", "SEO", "Status", "Date"],
-      ...leads.map((l) => [
-        l.id, l.name, l.email, l.phone ?? "", l.website_url, l.business_type,
-        l.ai_visibility_score ?? "", l.geo_score ?? "", l.seo_score ?? "",
-        l.status, new Date(l.created_at).toISOString(),
-      ]),
-    ];
-    const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const rows = rowsForExport();
+    const header = Object.keys(rows[0] ?? {});
+    const csv = [
+      header.join(","),
+      ...rows.map((r) => header.map((h) => `"${String((r as Record<string, unknown>)[h] ?? "").replace(/"/g, '""')}"`).join(",")),
+    ].join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `leads-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `swiftmind-leads-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -138,7 +167,8 @@ function AdminPage() {
             <span className="font-bold">Swift Mind — لوحة المسؤول</span>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={exportCsv}><Download className="size-4 me-2" />تصدير CSV</Button>
+            <Button variant="default" size="sm" onClick={exportXlsx} className="bg-gradient-hero"><FileSpreadsheet className="size-4 me-2" />تصدير Excel</Button>
+            <Button variant="outline" size="sm" onClick={exportCsv}><Download className="size-4 me-2" />CSV</Button>
             <Button variant="ghost" size="sm" onClick={signOut}><LogOut className="size-4 me-2" />خروج</Button>
           </div>
         </div>
