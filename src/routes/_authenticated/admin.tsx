@@ -212,6 +212,7 @@ function AdminPage() {
                 <TableRow>
                   <TableHead>الاسم</TableHead>
                   <TableHead>البريد</TableHead>
+                  <TableHead>الجوال</TableHead>
                   <TableHead>الموقع</TableHead>
                   <TableHead>النشاط</TableHead>
                   <TableHead>AI</TableHead>
@@ -224,12 +225,13 @@ function AdminPage() {
               </TableHeader>
               <TableBody>
                 {leads.length === 0 && !loading && (
-                  <TableRow><TableCell colSpan={10} className="text-center py-8 text-muted-foreground">لا توجد نتائج</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={11} className="text-center py-8 text-muted-foreground">لا توجد نتائج</TableCell></TableRow>
                 )}
                 {leads.map((l) => (
                   <TableRow key={l.id}>
                     <TableCell className="font-medium">{l.name}</TableCell>
                     <TableCell dir="ltr" className="text-sm">{l.email}</TableCell>
+                    <TableCell dir="ltr" className="text-sm">{l.phone}</TableCell>
                     <TableCell dir="ltr" className="text-xs max-w-[200px] truncate">{l.website_url}</TableCell>
                     <TableCell className="text-sm">{l.business_type}</TableCell>
                     <TableCell>{l.ai_visibility_score ?? "—"}</TableCell>
