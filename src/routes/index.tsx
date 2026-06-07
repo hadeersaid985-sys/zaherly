@@ -245,7 +245,7 @@ function HomePage() {
           © {new Date().getFullYear()} Swift Mind — جميع الحقوق محفوظة
         </div>
       </footer>
-      <WhatsAppFloat />
+      
     </div>
   );
 }

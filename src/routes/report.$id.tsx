@@ -13,7 +13,7 @@ import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
 } from "recharts";
 import { Bot, Download, CheckCircle2, AlertTriangle, Sparkles, FileText, Calendar, ArrowLeft, MessageCircle } from "lucide-react";
-import { WhatsAppFloat } from "@/components/whatsapp-float";
+
 import { WHATSAPP_LINK, PRICING } from "@/lib/contact";
 
 export const Route = createFileRoute("/report/$id")({
@@ -316,7 +316,7 @@ function ReportPage() {
           تم إعداد هذا التقرير بواسطة Swift Mind • {new Date().toLocaleDateString("ar")}
         </div>
       </div>
-      <WhatsAppFloat message="مرحباً Swift Mind، شاهدت تقريري وأرغب في معرفة المزيد" />
+      
     </div>
   );
 }
