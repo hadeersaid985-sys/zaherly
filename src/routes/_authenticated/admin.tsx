@@ -162,10 +162,10 @@ function AdminPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <BrandLogo className="h-8 w-auto" />
-            <span className="text-sm text-muted-foreground">لوحة المسؤول</span>
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <BrandLogo className="h-12 md:h-14 w-auto" />
+            <span className="text-sm text-muted-foreground hidden sm:inline">لوحة المسؤول</span>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="default" size="sm" onClick={exportXlsx} className="bg-gradient-hero"><FileSpreadsheet className="size-4 me-2" />تصدير Excel</Button>
