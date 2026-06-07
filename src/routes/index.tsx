@@ -77,7 +77,7 @@ function HomePage() {
               <Bot className="size-4 text-primary" />
               <span>أول أداة عربية لقياس الظهور في الذكاء الاصطناعي</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight bg-gradient-to-l from-primary to-primary-glow bg-clip-text text-transparent">
               اعرف في 60 ثانية ليه موقعك مش ظاهر في Google و ChatGPT
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
