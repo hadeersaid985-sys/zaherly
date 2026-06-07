@@ -212,6 +212,7 @@ function AdminPage() {
                 <TableRow>
                   <TableHead>الاسم</TableHead>
                   <TableHead>البريد</TableHead>
+                  <TableHead>الجوال</TableHead>
                   <TableHead>الموقع</TableHead>
                   <TableHead>النشاط</TableHead>
                   <TableHead>AI</TableHead>
