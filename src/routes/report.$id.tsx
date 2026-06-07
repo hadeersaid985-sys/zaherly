@@ -298,55 +298,6 @@ function ReportPage() {
           </div>
         </Card>
 
-        {/* Action plan — two paid plans */}
-        <Card className="p-6 print-break">
-          <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-            <Calendar className="size-5 text-primary" />
-            خطط العمل مع Swift Mind
-          </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {[
-              {
-                t: "خطة ٣٠ يوم — الأساسيات",
-                price: PRICING.plan30.price,
-                currency: PRICING.plan30.currency,
-                items: report.actionPlan.days30,
-                color: "bg-primary/10 border-primary/30",
-                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٣٠ يوم (${PRICING.plan30.price} ${PRICING.plan30.currency})`,
-              },
-              {
-                t: "خطة ٦٠ يوم — التوسع",
-                price: PRICING.plan60.price,
-                currency: PRICING.plan60.currency,
-                items: [...report.actionPlan.days30, ...report.actionPlan.days60],
-                color: "bg-chart-2/10 border-chart-2/30",
-                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٦٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency})`,
-              },
-            ].map((p) => (
-              <div key={p.t} className={`p-5 rounded-xl border-2 ${p.color} flex flex-col`}>
-                <div className="font-bold text-lg mb-1">{p.t}</div>
-                <div className="text-3xl font-extrabold text-primary mb-3">
-                  {p.price.toLocaleString("ar-EG")} <span className="text-base font-normal text-muted-foreground">{p.currency}</span>
-                </div>
-                <ul className="space-y-2 text-sm flex-1 mb-4">
-                  {p.items.slice(0, 8).map((it, i) => (
-                    <li key={i} className="flex gap-2"><span>◉</span><span>{it}</span></li>
-                  ))}
-                </ul>
-                <a
-                  href={WHATSAPP_LINK(p.msg)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="no-print inline-flex items-center justify-center gap-2 w-full bg-[#25D366] text-white font-bold py-3 rounded-lg hover:opacity-90 transition"
-                >
-                  <MessageCircle className="size-5" />
-                  للبدء في خطة العمل تواصل معنا للحجز
-                </a>
-              </div>
-            ))}
-          </div>
-        </Card>
-
         {/* Contact CTA */}
         <Card className="p-8 bg-gradient-hero text-white text-center no-print">
           <h3 className="text-2xl font-bold mb-2">مزيد من التحليل المفصل؟ كلمنا دلوقتي</h3>
