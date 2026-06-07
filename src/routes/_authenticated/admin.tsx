@@ -165,7 +165,7 @@ function AdminPage() {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <BrandLogo className="h-8 w-auto" />
-            <span className="font-bold">Swift Mynd — لوحة المسؤول</span>
+            <span className="text-sm text-muted-foreground">لوحة المسؤول</span>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="default" size="sm" onClick={exportXlsx} className="bg-gradient-hero"><FileSpreadsheet className="size-4 me-2" />تصدير Excel</Button>
