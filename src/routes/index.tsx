@@ -58,12 +58,8 @@ function HomePage() {
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center">
             <BrandLogo className="h-10 w-auto" />
-            <div>
-              <div className="font-bold text-lg leading-tight">Swift Mynd</div>
-              <div className="text-xs text-muted-foreground leading-tight">فحص الظهور في ChatGPT</div>
-            </div>
           </div>
           <a href="/login" className="text-sm text-muted-foreground hover:text-foreground">دخول المسؤول</a>
         </div>
