@@ -78,7 +78,7 @@ function HomePage() {
               <span>أول أداة عربية لقياس الظهور في الذكاء الاصطناعي</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-              هل سيقترح <span className="text-gradient">ChatGPT</span> شركتك؟
+              اعرف في 60 ثانية ليه موقعك مش ظاهر في Google و ChatGPT
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               نقوم بزحف موقعك فعلياً وتحليله بالذكاء الاصطناعي لقياس جاهزيتك للظهور في

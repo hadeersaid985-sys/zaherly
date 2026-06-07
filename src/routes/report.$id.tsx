@@ -126,7 +126,7 @@ function ReportPage() {
             <div className="flex-1 text-center md:text-right">
               <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
                 <Bot className="size-6" />
-                <h2 className="text-2xl font-bold">هل سيقترح ChatGPT شركتك؟</h2>
+                <h2 className="text-2xl font-bold">اعرف في 60 ثانية ليه موقعك مش ظاهر في Google و ChatGPT</h2>
               </div>
               <p className="text-lg mb-4 opacity-95">{report.summary}</p>
               <ul className="space-y-1 text-sm opacity-90">
