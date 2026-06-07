@@ -171,8 +171,8 @@ function HomePage() {
               </label>
               <Button
                 type="submit"
-                disabled={loading}
-                className="w-full h-12 text-base font-bold bg-gradient-hero hover:opacity-90 shadow-glow"
+                disabled={loading || !form.marketingConsent}
+                className="w-full h-12 text-base font-bold bg-gradient-hero hover:opacity-90 shadow-glow disabled:opacity-60"
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
