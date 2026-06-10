@@ -215,13 +215,64 @@ function AdminPage() {
         </Card>
 
         <Card className="p-0 overflow-hidden">
-          <div className="p-4 border-b flex items-center justify-between">
+          <div className="p-4 border-b flex items-center justify-between gap-2 flex-wrap">
             <h2 className="font-bold">العملاء المحتملون ({leads.length})</h2>
+            <div className="flex items-center gap-2">
+              {selected.size > 0 && (
+                <span className="text-sm text-muted-foreground">{selected.size} محدد</span>
+              )}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm" disabled={selected.size === 0 || deleting} className="gap-2">
+                    <Trash2 className="size-4" />
+                    حذف المحدد
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>حذف العملاء المحددين؟</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      سيتم حذف {selected.size} سجل نهائياً ولا يمكن التراجع.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={async () => {
+                        setDeleting(true);
+                        try {
+                          const ids = Array.from(selected);
+                          await removeLeads({ data: { ids } });
+                          toast.success(`تم حذف ${ids.length} سجل`);
+                          await load();
+                        } catch (err) {
+                          toast.error(err instanceof Error ? err.message : "خطأ");
+                        } finally {
+                          setDeleting(false);
+                        }
+                      }}
+                    >
+                      حذف
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-10">
+                    <Checkbox
+                      checked={leads.length > 0 && selected.size === leads.length}
+                      onCheckedChange={(c) => {
+                        if (c) setSelected(new Set(leads.map((l) => l.id)));
+                        else setSelected(new Set());
+                      }}
+                      aria-label="تحديد الكل"
+                    />
+                  </TableHead>
                   <TableHead>الاسم</TableHead>
                   <TableHead>البريد</TableHead>
                   <TableHead>الجوال</TableHead>
@@ -237,10 +288,24 @@ function AdminPage() {
               </TableHeader>
               <TableBody>
                 {leads.length === 0 && !loading && (
-                  <TableRow><TableCell colSpan={11} className="text-center py-8 text-muted-foreground">لا توجد نتائج</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={12} className="text-center py-8 text-muted-foreground">لا توجد نتائج</TableCell></TableRow>
                 )}
                 {leads.map((l) => (
-                  <TableRow key={l.id}>
+                  <TableRow key={l.id} data-state={selected.has(l.id) ? "selected" : undefined}>
+                    <TableCell>
+                      <Checkbox
+                        checked={selected.has(l.id)}
+                        onCheckedChange={(c) => {
+                          setSelected((prev) => {
+                            const next = new Set(prev);
+                            if (c) next.add(l.id);
+                            else next.delete(l.id);
+                            return next;
+                          });
+                        }}
+                        aria-label={`تحديد ${l.name}`}
+                      />
+                    </TableCell>
                     <TableCell className="font-medium">{l.name}</TableCell>
                     <TableCell dir="ltr" className="text-sm">{l.email}</TableCell>
                     <TableCell dir="ltr" className="text-sm">{l.phone}</TableCell>
@@ -266,6 +331,7 @@ function AdminPage() {
             </Table>
           </div>
         </Card>
+
       </div>
     </div>
   );
