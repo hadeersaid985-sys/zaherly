@@ -70,6 +70,8 @@ function AdminPage() {
         },
       });
       setLeads(res.leads as Lead[]);
+      setSelected(new Set());
+
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "خطأ");
     } finally {
