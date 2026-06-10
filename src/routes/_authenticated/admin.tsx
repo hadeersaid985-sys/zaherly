@@ -293,8 +293,9 @@ function AdminPage() {
                 )}
                 {leads.map((l) => (
                   <TableRow key={l.id} data-state={selected.has(l.id) ? "selected" : undefined}>
-                    <TableCell>
+                    <TableCell className="ps-4 pe-2">
                       <Checkbox
+                        className="rounded-[4px] h-4 w-4"
                         checked={selected.has(l.id)}
                         onCheckedChange={(c) => {
                           setSelected((prev) => {
