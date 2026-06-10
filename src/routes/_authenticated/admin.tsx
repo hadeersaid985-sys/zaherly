@@ -45,8 +45,12 @@ function AdminPage() {
   const fetchLeads = useServerFn(listLeads);
   const checkAdmin = useServerFn(checkIsAdmin);
   const bootstrap = useServerFn(grantAdminBootstrap);
+  const removeLeads = useServerFn(deleteLeads);
 
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [deleting, setDeleting] = useState(false);
+
   const [search, setSearch] = useState("");
   const [minScore, setMinScore] = useState("");
   const [from, setFrom] = useState("");
