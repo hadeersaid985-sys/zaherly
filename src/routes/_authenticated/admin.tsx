@@ -1,17 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { listLeads, checkIsAdmin, grantAdminBootstrap } from "@/lib/admin.functions";
+import { listLeads, checkIsAdmin, grantAdminBootstrap, deleteLeads } from "@/lib/admin.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { BrandLogo } from "@/components/brand-logo";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Download, LogOut, Search, Sparkles, ExternalLink, FileSpreadsheet } from "lucide-react";
+import { Download, LogOut, Search, Sparkles, ExternalLink, FileSpreadsheet, Trash2 } from "lucide-react";
 import * as XLSX from "xlsx";
+
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "لوحة المسؤول — Swift Mind" }] }),
