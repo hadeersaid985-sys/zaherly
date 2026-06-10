@@ -263,8 +263,9 @@ function AdminPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-10">
+                  <TableHead className="w-12 ps-4 pe-2">
                     <Checkbox
+                      className="rounded-[4px] h-4 w-4"
                       checked={leads.length > 0 && selected.size === leads.length}
                       onCheckedChange={(c) => {
                         if (c) setSelected(new Set(leads.map((l) => l.id)));
@@ -292,8 +293,9 @@ function AdminPage() {
                 )}
                 {leads.map((l) => (
                   <TableRow key={l.id} data-state={selected.has(l.id) ? "selected" : undefined}>
-                    <TableCell>
+                    <TableCell className="ps-4 pe-2">
                       <Checkbox
+                        className="rounded-[4px] h-4 w-4"
                         checked={selected.has(l.id)}
                         onCheckedChange={(c) => {
                           setSelected((prev) => {
