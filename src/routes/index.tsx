@@ -70,8 +70,8 @@ function HomePage() {
           >
             <a href={sampleReport.url} target="_blank" rel="noopener noreferrer">
               <FileSearch className="size-4" />
-              <span className="hidden xs:inline sm:inline">شوف سابقة أعمالنا</span>
-              <span className="xs:hidden sm:hidden">أعمالنا</span>
+              <span className="hidden xs:inline sm:inline">شاهد النتائج التي حققناها</span>
+              <span className="xs:hidden sm:hidden">النتائج</span>
             </a>
           </Button>
         </div>
