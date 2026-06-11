@@ -96,19 +96,6 @@ function HomePage() {
               نقوم بزحف موقعك فعلياً وتحليله بالذكاء الاصطناعي لقياس جاهزيتك للظهور في
               ChatGPT و Gemini وبحث الذكاء الاصطناعي. تقرير شامل مع خطة عمل ٩٠ يوماً.
             </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary font-bold shadow-elegant"
-              >
-                <a href={sampleReport.url} target="_blank" rel="noopener noreferrer">
-                  <FileSearch className="size-5" />
-                  شوف نموذج تقرير لعميل سابق
-                </a>
-              </Button>
-            </div>
             <div className="flex flex-wrap gap-6 pt-2">
               {[
                 { icon: Search, label: "زحف حقيقي للموقع" },
