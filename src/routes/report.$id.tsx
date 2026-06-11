@@ -208,15 +208,16 @@ function ReportPage() {
                 t: "خطة ٦٠ يوم — التوسع",
                 price: PRICING.plan60.price,
                 currency: PRICING.plan60.currency,
+                monthly: true,
                 items: [...report.actionPlan.days30, ...report.actionPlan.days60],
                 color: "bg-chart-2/10 border-chart-2/30",
-                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٦٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency})`,
+                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٦٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency} شهرياً)`,
               },
             ].map((p) => (
               <div key={p.t} className={`p-5 rounded-xl border-2 ${p.color} flex flex-col`}>
                 <div className="font-bold text-lg mb-1">{p.t}</div>
                 <div className="text-3xl font-extrabold text-primary mb-3">
-                  {p.price.toLocaleString("ar-EG")} <span className="text-base font-normal text-muted-foreground">{p.currency}</span>
+                  {p.price.toLocaleString("ar-EG")} <span className="text-base font-normal text-muted-foreground">{p.currency}{p.monthly ? " / شهرياً" : ""}</span>
                 </div>
                 <ul className="space-y-2 text-sm flex-1 mb-4">
                   {p.items.slice(0, 8).map((it, i) => (
