@@ -5,5 +5,5 @@ export const WHATSAPP_LINK = (msg?: string) =>
 
 export const PRICING = {
   plan30: { days: 30, price: 7000, currency: "ج.م" },
-  plan60: { days: 60, price: 10000, currency: "ج.م" },
+  plan60: { days: 60, price: 9000, currency: "ج.م", monthly: true },
 };
