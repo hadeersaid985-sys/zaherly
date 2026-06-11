@@ -11,7 +11,8 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { WHATSAPP_LINK } from "@/lib/contact";
-import { Sparkles, Search, FileText, Bot, TrendingUp, Globe, MessageCircle } from "lucide-react";
+import { Sparkles, Search, FileText, Bot, TrendingUp, Globe, MessageCircle, FileSearch } from "lucide-react";
+import sampleReport from "@/assets/seo_report.pdf.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,10 +58,22 @@ function HomePage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center">
+        <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-3">
           <div className="flex items-center min-w-0">
             <BrandLogo className="h-10 sm:h-12 md:h-14 w-auto" />
           </div>
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="border-primary/40 text-primary hover:bg-primary/10 hover:text-primary font-semibold shrink-0"
+          >
+            <a href={sampleReport.url} target="_blank" rel="noopener noreferrer">
+              <FileSearch className="size-4" />
+              <span className="hidden xs:inline sm:inline">شوف سابقة أعمالنا</span>
+              <span className="xs:hidden sm:hidden">أعمالنا</span>
+            </a>
+          </Button>
         </div>
       </header>
 
@@ -83,6 +96,19 @@ function HomePage() {
               نقوم بزحف موقعك فعلياً وتحليله بالذكاء الاصطناعي لقياس جاهزيتك للظهور في
               ChatGPT و Gemini وبحث الذكاء الاصطناعي. تقرير شامل مع خطة عمل ٩٠ يوماً.
             </p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary font-bold shadow-elegant"
+              >
+                <a href={sampleReport.url} target="_blank" rel="noopener noreferrer">
+                  <FileSearch className="size-5" />
+                  شوف نموذج تقرير لعميل سابق
+                </a>
+              </Button>
+            </div>
             <div className="flex flex-wrap gap-6 pt-2">
               {[
                 { icon: Search, label: "زحف حقيقي للموقع" },
