@@ -209,6 +209,11 @@ function HomePage() {
       {/* Stats */}
       <StatsSection />
 
+      {/* Why now — SEO → GEO */}
+      <ShiftSection />
+
+
+
       {/* Features */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center max-w-2xl mx-auto mb-12">
