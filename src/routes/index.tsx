@@ -209,11 +209,6 @@ function HomePage() {
       {/* Stats */}
       <StatsSection />
 
-      {/* Why now — SEO → GEO */}
-      <ShiftSection />
-
-
-
       {/* Features */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center max-w-2xl mx-auto mb-12">
@@ -239,6 +234,10 @@ function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Why now — SEO → GEO */}
+      <ShiftSection />
+
 
       <section className="container mx-auto px-4 pb-16">
         <Card className="p-8 md:p-10 bg-gradient-hero text-white shadow-elegant text-center">
