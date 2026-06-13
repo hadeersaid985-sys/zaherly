@@ -388,21 +388,6 @@ function ShiftSection() {
           ))}
         </div>
 
-        {/* Visual */}
-        <div className="relative pt-4">
-          <div className="absolute -inset-8 bg-gradient-hero opacity-20 blur-3xl rounded-[3rem] -z-10" />
-          <div className="relative rounded-3xl overflow-hidden border border-border/60 shadow-elegant bg-gradient-card">
-            <img
-              src={aiShiftVisual}
-              alt="تحول البحث من الطرق التقليدية إلى الذكاء الاصطناعي"
-              loading="lazy"
-              width={1024}
-              height={1024}
-              className="w-full h-auto object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent pointer-events-none" />
-          </div>
-        </div>
 
         {/* SEO → GEO */}
         <Card className="p-5 md:p-6 bg-gradient-hero text-white shadow-elegant border-0">
