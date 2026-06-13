@@ -260,3 +260,65 @@ function HomePage() {
     </div>
   );
 }
+
+function CountUp({ target, duration = 2000 }: { target: number; duration?: number }) {
+  const [value, setValue] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !started.current) {
+          started.current = true;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setValue(Math.floor(eased * target));
+            if (p < 1) requestAnimationFrame(tick);
+            else setValue(target);
+          };
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.3 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [target, duration]);
+
+  return <span ref={ref}>{value.toLocaleString("en-US")}</span>;
+}
+
+function StatsSection() {
+  const stats = [
+    { n: 2700, l: "تدقيق ظهور في الذكاء الاصطناعي" },
+    { n: 3000, l: "شركة في أكثر من 40 قطاعاً" },
+    { n: 1500, l: "شركة مسجّلة" },
+    { n: 1100, l: "شركة نشطة" },
+  ];
+  return (
+    <section className="relative overflow-hidden border-y border-border/50">
+      <div className="absolute inset-0 bg-gradient-hero opacity-[0.08] -z-10" />
+      <div className="absolute -top-20 right-1/4 size-72 rounded-full bg-primary-glow/20 blur-3xl -z-10" />
+      <div className="absolute -bottom-20 left-1/4 size-72 rounded-full bg-primary/20 blur-3xl -z-10" />
+      <div className="container mx-auto px-4 py-14 md:py-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          {stats.map((s) => (
+            <Card
+              key={s.l}
+              className="p-5 md:p-6 text-center bg-gradient-card border-border/60 hover:shadow-elegant hover:-translate-y-1 transition-all"
+            >
+              <div className="text-3xl md:text-5xl font-extrabold mb-2 text-aurora leading-none">
+                +<CountUp target={s.n} />
+              </div>
+              <div className="text-xs md:text-sm text-muted-foreground leading-relaxed">{s.l}</div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
