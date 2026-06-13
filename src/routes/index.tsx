@@ -351,78 +351,72 @@ function ShiftSection() {
       <div className="absolute top-1/3 -right-40 size-96 rounded-full bg-primary-glow/20 blur-3xl -z-10" />
       <div className="absolute bottom-0 -left-40 size-96 rounded-full bg-primary/20 blur-3xl -z-10" />
 
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-16 items-start">
-          {/* Left: heading + boxes */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-xs md:text-sm">
-                <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="text-primary font-semibold">لماذا التصرف الآن</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight">
-                <span className="text-foreground">البحث بيتغيّر...</span>
-                <br />
-                <span className="text-aurora">والـ AI بقى هو الدليل الجديد.</span>
-              </h2>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                السيو التقليدي كان هدفه إنك تظهر في نتائج البحث. لكن دلوقتي، الذكاء
-                الاصطناعي بقى بيختصر الطريق ويجاوب مباشرة. ولو موقعك مش مجهز صح،
-                ممكن المنافسين يظهروا مكانك.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              {boxes.map((b, i) => (
-                <Card
-                  key={i}
-                  className="group relative overflow-hidden p-5 md:p-6 bg-gradient-card border-border/60 hover:border-primary/40 hover:shadow-elegant transition-all"
-                >
-                  <div className="absolute inset-y-0 right-0 w-1 bg-gradient-hero opacity-60 group-hover:opacity-100 transition-opacity" />
-                  <div className="flex items-start gap-4">
-                    <div className="shrink-0 size-11 rounded-xl bg-gradient-hero flex items-center justify-center shadow-glow">
-                      <b.icon className="size-5 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-base md:text-lg mb-1 leading-snug">{b.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-
-            {/* SEO → GEO */}
-            <Card className="p-5 md:p-6 bg-gradient-hero text-white shadow-elegant border-0">
-              <div className="flex flex-wrap items-center justify-center gap-3 md:gap-5 text-center">
-                <div className="flex items-center gap-2">
-                  <span className="line-through opacity-70 text-lg md:text-xl font-bold">SEO</span>
-                  <span className="text-xs md:text-sm opacity-80">انتهى كفاية لوحده</span>
-                </div>
-                <ArrowLeft className="size-5 opacity-80" />
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl md:text-3xl font-extrabold">GEO</span>
-                  <span className="text-xs md:text-sm opacity-90 font-semibold">هو المستقبل</span>
-                </div>
-              </div>
-            </Card>
+      <div className="container mx-auto px-4 space-y-10">
+        {/* Heading */}
+        <div className="space-y-4 max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-xs md:text-sm">
+            <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-primary font-semibold">لماذا التصرف الآن</span>
           </div>
-
-          {/* Right: stats */}
-          <div className="space-y-6 lg:sticky lg:top-24">
-            <StatBlock
-              kicker="تحول النموذج"
-              value="74%"
-              text="من المستخدمين بدأوا يعتمدوا على الذكاء الاصطناعي كمصدر أسرع للمعلومات بدل البحث التقليدي."
-            />
-            <StatBlock
-              kicker="فرصة السوق"
-              value="$25B"
-              text="هو حجم سوق تحسين الظهور داخل محركات الذكاء الاصطناعي المتوقع خلال السنوات القادمة."
-            />
-          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold leading-tight">
+            <span className="text-foreground">البحث بيتغيّر...</span>
+            <br />
+            <span className="text-aurora">والـ AI بقى هو الدليل الجديد.</span>
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+            السيو التقليدي كان هدفه إنك تظهر في نتائج البحث. لكن دلوقتي، الذكاء
+            الاصطناعي بقى بيختصر الطريق ويجاوب مباشرة. ولو موقعك مش مجهز صح،
+            ممكن المنافسين يظهروا مكانك.
+          </p>
         </div>
+
+        {/* Boxes */}
+        <div className="grid md:grid-cols-3 gap-4">
+          {boxes.map((b, i) => (
+            <Card
+              key={i}
+              className="group relative overflow-hidden p-5 md:p-6 bg-gradient-card border-border/60 hover:border-primary/40 hover:shadow-elegant transition-all"
+            >
+              <div className="absolute inset-y-0 right-0 w-1 bg-gradient-hero opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="shrink-0 size-11 rounded-xl bg-gradient-hero flex items-center justify-center shadow-glow mb-4">
+                <b.icon className="size-5 text-white" />
+              </div>
+              <h3 className="font-bold text-base md:text-lg mb-2 leading-snug">{b.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
+            </Card>
+          ))}
+        </div>
+
+        {/* Stats — 74% right, $25B left */}
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 pt-4">
+          <StatBlock
+            kicker="تحول النموذج"
+            value="74%"
+            text="من المستخدمين بدأوا يعتمدوا على الذكاء الاصطناعي كمصدر أسرع للمعلومات بدل البحث التقليدي."
+          />
+          <StatBlock
+            kicker="فرصة السوق"
+            value="$25B"
+            text="هو حجم سوق تحسين الظهور داخل محركات الذكاء الاصطناعي المتوقع خلال السنوات القادمة."
+          />
+        </div>
+
+        {/* SEO → GEO */}
+        <Card className="p-5 md:p-6 bg-gradient-hero text-white shadow-elegant border-0">
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-5 text-center">
+            <div className="flex items-center gap-2">
+              <span className="line-through opacity-70 text-lg md:text-xl font-bold">SEO</span>
+              <span className="text-xs md:text-sm opacity-80">انتهى كفاية لوحده</span>
+            </div>
+            <ArrowLeft className="size-5 opacity-80" />
+            <div className="flex items-center gap-2">
+              <span className="text-2xl md:text-3xl font-extrabold">GEO</span>
+              <span className="text-xs md:text-sm opacity-90 font-semibold">هو المستقبل</span>
+            </div>
+          </div>
+        </Card>
       </div>
+
     </section>
   );
 }
