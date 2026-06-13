@@ -206,6 +206,25 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Stats */}
+      <section className="border-y border-border/50 bg-muted/30">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {[
+              { n: "+2,700", l: "تدقيق ظهور في الذكاء الاصطناعي" },
+              { n: "+3,000", l: "شركة في أكثر من 40 قطاعاً" },
+              { n: "+1,500", l: "شركة مسجّلة" },
+              { n: "+1,100", l: "شركة نشطة" },
+            ].map((s) => (
+              <div key={s.l}>
+                <div className="text-3xl md:text-4xl font-extrabold text-success mb-2">{s.n}</div>
+                <div className="text-sm text-muted-foreground">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center max-w-2xl mx-auto mb-12">
