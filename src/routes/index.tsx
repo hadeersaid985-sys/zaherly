@@ -388,18 +388,20 @@ function ShiftSection() {
           ))}
         </div>
 
-        {/* Stats — 74% right, $25B left */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 pt-4">
-          <StatBlock
-            kicker="سلوك البحث بيتغير"
-            value="74%"
-            text="من المستخدمين بيدوروا على إجابات مباشرة من الذكاء الاصطناعي بدل البحث التقليدي."
-          />
-          <StatBlock
-            kicker="فرصة السوق بتكبر"
-            value="$25B"
-            text="هو حجم السوق المتوقع لخدمات تحسين الظهور في أدوات الذكاء الاصطناعي عالميًا."
-          />
+        {/* Visual */}
+        <div className="relative pt-4">
+          <div className="absolute -inset-8 bg-gradient-hero opacity-20 blur-3xl rounded-[3rem] -z-10" />
+          <div className="relative rounded-3xl overflow-hidden border border-border/60 shadow-elegant bg-gradient-card">
+            <img
+              src={aiShiftVisual}
+              alt="تحول البحث من الطرق التقليدية إلى الذكاء الاصطناعي"
+              loading="lazy"
+              width={1024}
+              height={1024}
+              className="w-full h-auto object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent pointer-events-none" />
+          </div>
         </div>
 
         {/* SEO → GEO */}
