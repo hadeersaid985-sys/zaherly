@@ -11,7 +11,7 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { WHATSAPP_LINK } from "@/lib/contact";
-import { Sparkles, Search, FileText, Bot, TrendingUp, Globe, MessageCircle, FileSearch } from "lucide-react";
+import { Sparkles, Search, FileText, Bot, TrendingUp, Globe, MessageCircle, FileSearch, MousePointerClick, Clock, Languages, ArrowLeft } from "lucide-react";
 import sampleReport from "@/assets/seo_report.pdf.asset.json";
 
 export const Route = createFileRoute("/")({
