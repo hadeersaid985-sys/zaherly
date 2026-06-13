@@ -294,10 +294,10 @@ function CountUp({ target, duration = 2000 }: { target: number; duration?: numbe
 
 function StatsSection() {
   const stats = [
-    { n: 2700, l: "تدقيق ظهور في الذكاء الاصطناعي" },
-    { n: 3000, l: "شركة في أكثر من 40 قطاعاً" },
-    { n: 1500, l: "شركة مسجّلة" },
-    { n: 1100, l: "شركة نشطة" },
+    { n: 3850, l: "تدقيق ظهور في الذكاء الاصطناعي" },
+    { n: 3000, l: "شركة في أكثر من 30 قطاع" },
+    { n: 1750, l: "شركة مسجلة" },
+    { n: 900, l: "شركة نشطة" },
   ];
   return (
     <section className="relative overflow-hidden border-y border-border/50">
