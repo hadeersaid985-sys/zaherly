@@ -257,7 +257,7 @@ function HomePage() {
 
       <footer className="border-t border-border/50 mt-10">
         <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} ظاهرلي — جميع الحقوق محفوظة
+          © {new Date().getFullYear()} جميع الحقوق محفوظة ل شركة ظاهرلي .احدى خدمات سويفت مايند
         </div>
       </footer>
       
