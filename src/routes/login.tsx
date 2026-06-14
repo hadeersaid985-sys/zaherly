@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "دخول المسؤول — Swift Mind" }] }),
+  head: () => ({ meta: [{ title: "دخول المسؤول — ظاهرلي" }] }),
   component: LoginPage,
 });
 

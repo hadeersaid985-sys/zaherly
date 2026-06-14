@@ -20,7 +20,7 @@ import * as XLSX from "xlsx";
 
 
 export const Route = createFileRoute("/_authenticated/admin")({
-  head: () => ({ meta: [{ title: "لوحة المسؤول — Swift Mind" }] }),
+  head: () => ({ meta: [{ title: "لوحة المسؤول — ظاهرلي" }] }),
   component: AdminPage,
 });
 
@@ -135,7 +135,7 @@ function AdminPage() {
     ws["!cols"] = Object.keys(rows[0] ?? {}).map((k) => ({ wch: Math.max(14, k.length + 4) }));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Leads");
-    XLSX.writeFile(wb, `swiftmind-leads-${new Date().toISOString().slice(0, 10)}.xlsx`);
+    XLSX.writeFile(wb, `zaherly-leads-${new Date().toISOString().slice(0, 10)}.xlsx`);
   };
 
   const exportCsv = () => {
@@ -149,7 +149,7 @@ function AdminPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `swiftmind-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `zaherly-leads-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };

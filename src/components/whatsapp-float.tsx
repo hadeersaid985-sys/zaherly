@@ -3,7 +3,7 @@ import { WHATSAPP_LINK } from "@/lib/contact";
 export function WhatsAppFloat({ message }: { message?: string }) {
   return (
     <a
-      href={WHATSAPP_LINK(message ?? "مرحباً Swift Mind، أرغب في معرفة المزيد")}
+      href={WHATSAPP_LINK(message ?? "مرحباً ظاهرلي، أرغب في معرفة المزيد")}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="تواصل عبر واتساب"

@@ -192,7 +192,7 @@ function ReportPage() {
         <Card className="p-6 print-break">
           <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
             <Calendar className="size-5 text-primary" />
-            خطط العمل مع Swift Mind
+            خطط العمل مع ظاهرلي
           </h3>
           <div className="grid md:grid-cols-2 gap-4">
             {[
@@ -202,7 +202,7 @@ function ReportPage() {
                 currency: PRICING.plan30.currency,
                 items: report.actionPlan.days30,
                 color: "bg-primary/10 border-primary/30",
-                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٣٠ يوم (${PRICING.plan30.price} ${PRICING.plan30.currency})`,
+                msg: `مرحباً ظاهرلي، أرغب في حجز خطة الـ ٣٠ يوم (${PRICING.plan30.price} ${PRICING.plan30.currency})`,
               },
               {
                 t: "خطة ٦٠ يوم — التوسع",
@@ -211,7 +211,7 @@ function ReportPage() {
                 monthly: true,
                 items: [...report.actionPlan.days30, ...report.actionPlan.days60],
                 color: "bg-chart-2/10 border-chart-2/30",
-                msg: `مرحباً Swift Mind، أرغب في حجز خطة الـ ٦٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency} شهرياً)`,
+                msg: `مرحباً ظاهرلي، أرغب في حجز خطة الـ ٦٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency} شهرياً)`,
               },
             ].map((p) => (
               <div key={p.t} className={`p-5 rounded-xl border-2 ${p.color} flex flex-col`}>
@@ -309,9 +309,9 @@ function ReportPage() {
         {/* Contact CTA */}
         <Card className="p-8 bg-gradient-hero text-white text-center no-print">
           <h3 className="text-2xl font-bold mb-2">مزيد من التحليل المفصل؟ كلمنا دلوقتي</h3>
-          <p className="opacity-95 mb-5">احصل على استشارة مفصلة من فريق Swift Mind وخطة مخصصة لنشاطك.</p>
+          <p className="opacity-95 mb-5">احصل على استشارة مفصلة من فريق ظاهرلي وخطة مخصصة لنشاطك.</p>
           <a
-            href={WHATSAPP_LINK("مرحباً Swift Mind، أحتاج تحليلاً أكثر تفصيلاً لموقعي")}
+            href={WHATSAPP_LINK("مرحباً ظاهرلي، أحتاج تحليلاً أكثر تفصيلاً لموقعي")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
@@ -322,7 +322,7 @@ function ReportPage() {
         </Card>
 
         <div className="text-center text-sm text-muted-foreground py-6 border-t border-border/50">
-          تم إعداد هذا التقرير بواسطة Swift Mind • {new Date().toLocaleDateString("ar")}
+          تم إعداد هذا التقرير بواسطة ظاهرلي • {new Date().toLocaleDateString("ar")}
         </div>
       </div>
       

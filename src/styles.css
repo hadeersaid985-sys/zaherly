@@ -44,7 +44,7 @@
 :root {
   --radius: 0.875rem;
 
-  /* Swift Mind brand — deep navy to sky blue */
+  /* ظاهرلي brand — deep navy to sky blue */
   --background: oklch(0.985 0.005 240);
   --foreground: oklch(0.18 0.05 250);
 
