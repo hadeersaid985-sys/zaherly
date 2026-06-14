@@ -17,7 +17,7 @@ import sampleReport from "@/assets/seo_report.pdf.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "فحص الظهور في ChatGPT — Swift Mind" },
+      { title: "فحص الظهور في ChatGPT — ظاهرلي" },
       {
         name: "description",
         content: "اكتشف ما إذا كان ChatGPT يقترح موقعك. تحليل GEO و SEO وتقرير PDF احترافي مجاناً.",
@@ -178,7 +178,7 @@ function HomePage() {
                   className="mt-1"
                 />
                 <span className="text-muted-foreground">
-                  أوافق على تلقي عروض Swift Mind وخدماتها عبر الواتساب أو البريد الإلكتروني.
+                  أوافق على تلقي عروض ظاهرلي وخدماتها عبر الواتساب أو البريد الإلكتروني.
                 </span>
               </label>
               <Button
@@ -242,9 +242,9 @@ function HomePage() {
       <section className="container mx-auto px-4 pb-16">
         <Card className="p-8 md:p-10 bg-gradient-hero text-white shadow-elegant text-center">
           <h3 className="text-2xl md:text-3xl font-bold mb-3">للبدء في خطة العمل تواصل معنا للحجز</h3>
-          <p className="opacity-95 mb-6">فريق Swift Mind جاهز للرد على استفساراتك خلال دقائق عبر الواتساب.</p>
+          <p className="opacity-95 mb-6">فريق ظاهرلي جاهز للرد على استفساراتك خلال دقائق عبر الواتساب.</p>
           <a
-            href={WHATSAPP_LINK("مرحباً Swift Mind، أرغب في الحجز والاستفسار عن خطط العمل")}
+            href={WHATSAPP_LINK("مرحباً ظاهرلي، أرغب في الحجز والاستفسار عن خطط العمل")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
@@ -257,7 +257,7 @@ function HomePage() {
 
       <footer className="border-t border-border/50 mt-10">
         <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Swift Mind — جميع الحقوق محفوظة
+          © {new Date().getFullYear()} ظاهرلي — جميع الحقوق محفوظة
         </div>
       </footer>
       
