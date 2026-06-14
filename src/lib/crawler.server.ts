@@ -30,7 +30,7 @@ export interface CrawlResult {
   uniqueSchemas: string[];
 }
 
-const UA = "Mozilla/5.0 (compatible; SwiftMindBot/1.0; +https://swiftmind.ai)";
+const UA = "Mozilla/5.0 (compatible; ZaherlyBot/1.0; +https://zaherly.ai)";
 const TIMEOUT_MS = 8000;
 const MAX_REDIRECTS = 5;
 

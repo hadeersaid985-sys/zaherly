@@ -1,5 +1,5 @@
-// Swift Mind contact details — update phone number here to change site-wide.
-export const WHATSAPP_NUMBER = "201097649856"; // Swift Mind WhatsApp
+// ظاهرلي contact details — update phone number here to change site-wide.
+export const WHATSAPP_NUMBER = "201097649856"; // ظاهرلي WhatsApp
 export const WHATSAPP_LINK = (msg?: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}${msg ? `?text=${encodeURIComponent(msg)}` : ""}`;
 

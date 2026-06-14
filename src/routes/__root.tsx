@@ -81,7 +81,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "اكتشف ما إذا كان ChatGPT والذكاء الاصطناعي يقترح موقعك. فحص GEO و SEO وجاهزية الذكاء الاصطناعي مع تقرير PDF كامل.",
       },
-      { name: "author", content: "Swift Mind" },
+      { name: "author", content: "ظاهرلي" },
       { property: "og:title", content: "ظاهرلي" },
       {
         property: "og:description",
@@ -98,8 +98,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", sizes: "any", href: "/__l5e/assets-v1/00e5d39a-168c-495f-88f6-c4d0017b9c5d/swiftmynd-favicon.png" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/__l5e/assets-v1/00e5d39a-168c-495f-88f6-c4d0017b9c5d/swiftmynd-favicon.png" },
+      { rel: "icon", type: "image/png", sizes: "any", href: "/__l5e/assets-v1/00e5d39a-168c-495f-88f6-c4d0017b9c5d/zaherly-favicon.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/__l5e/assets-v1/00e5d39a-168c-495f-88f6-c4d0017b9c5d/zaherly-favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
