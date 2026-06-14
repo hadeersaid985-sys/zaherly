@@ -1,4 +1,4 @@
-import logoAsset from "@/assets/zaherly-logo.jpg.asset.json";
+import logoAsset from "@/assets/zaherly-logo.png.asset.json";
 
 export function BrandLogo({ className = "size-9" }: { className?: string }) {
   return (
