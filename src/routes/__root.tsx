@@ -98,8 +98,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", sizes: "any", href: "/__l5e/assets-v1/8d728fb3-edb3-4854-9a68-3e564dfe2971/zaherly-favicon.png" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/__l5e/assets-v1/8d728fb3-edb3-4854-9a68-3e564dfe2971/zaherly-favicon.png" },
+      { rel: "icon", type: "image/png", sizes: "any", href: "/__l5e/assets-v1/679752df-1119-4ddf-bcee-d4fdc30496ae/zaherly-favicon.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/__l5e/assets-v1/679752df-1119-4ddf-bcee-d4fdc30496ae/zaherly-favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
