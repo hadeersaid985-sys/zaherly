@@ -1,12 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { listLeads, checkIsAdmin, grantAdminBootstrap, deleteLeads } from "@/lib/admin.functions";
+import { listLeads, checkIsAdmin, grantAdminBootstrap, deleteLeads, updateLead, type LeadStage } from "@/lib/admin.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
@@ -15,7 +22,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Download, LogOut, Search, Sparkles, ExternalLink, FileSpreadsheet, Trash2 } from "lucide-react";
+import { Download, LogOut, Search, ExternalLink, FileSpreadsheet, Trash2, StickyNote } from "lucide-react";
 import * as XLSX from "xlsx";
 
 
@@ -38,16 +45,31 @@ type Lead = {
   content_score?: number | null;
   authority_score?: number | null;
   status: string;
+  stage: LeadStage;
+  notes: string | null;
   created_at: string;
 };
+
+const STAGE_META: Record<LeadStage | "all", { label: string; badge: string }> = {
+  all: { label: "الكل", badge: "bg-muted text-foreground" },
+  new: { label: "جديد", badge: "bg-blue-500/15 text-blue-600 border border-blue-500/30" },
+  contacted: { label: "تم التواصل", badge: "bg-amber-500/15 text-amber-600 border border-amber-500/30" },
+  interested: { label: "مهتم", badge: "bg-purple-500/15 text-purple-600 border border-purple-500/30" },
+  customer: { label: "عميل", badge: "bg-emerald-500/15 text-emerald-600 border border-emerald-500/30" },
+  lost: { label: "مرفوض", badge: "bg-rose-500/15 text-rose-600 border border-rose-500/30" },
+};
+const STAGE_ORDER: (LeadStage | "all")[] = ["all", "new", "contacted", "interested", "customer", "lost"];
 
 function AdminPage() {
   const fetchLeads = useServerFn(listLeads);
   const checkAdmin = useServerFn(checkIsAdmin);
   const bootstrap = useServerFn(grantAdminBootstrap);
   const removeLeads = useServerFn(deleteLeads);
+  const patchLead = useServerFn(updateLead);
 
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [counts, setCounts] = useState<Record<string, number>>({ all: 0, new: 0, contacted: 0, interested: 0, customer: 0, lost: 0 });
+  const [stageFilter, setStageFilter] = useState<LeadStage | "all">("all");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [deleting, setDeleting] = useState(false);
 
@@ -58,20 +80,26 @@ function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
-  const load = async () => {
+  const [notesLead, setNotesLead] = useState<Lead | null>(null);
+  const [notesDraft, setNotesDraft] = useState("");
+  const [savingNotes, setSavingNotes] = useState(false);
+
+  const load = async (stageOverride?: LeadStage | "all") => {
     setLoading(true);
     try {
+      const st = stageOverride ?? stageFilter;
       const res = await fetchLeads({
         data: {
           search: search || undefined,
           minScore: minScore ? Number(minScore) : undefined,
           from: from || undefined,
           to: to || undefined,
+          stage: st === "all" ? undefined : st,
         },
       });
       setLeads(res.leads as Lead[]);
+      if (res.counts) setCounts(res.counts);
       setSelected(new Set());
-
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "خطأ");
     } finally {
@@ -110,6 +138,42 @@ function AdminPage() {
     window.location.href = "/login";
   };
 
+  const changeStage = async (lead: Lead, stage: LeadStage) => {
+    const prev = leads;
+    setLeads((ls) => ls.map((l) => (l.id === lead.id ? { ...l, stage } : l)));
+    setCounts((c) => ({ ...c, [lead.stage]: Math.max(0, (c[lead.stage] ?? 0) - 1), [stage]: (c[stage] ?? 0) + 1 }));
+    try {
+      await patchLead({ data: { id: lead.id, stage } });
+      toast.success(`تم تحديث الحالة إلى "${STAGE_META[stage].label}"`);
+      if (stageFilter !== "all" && stageFilter !== stage) {
+        setLeads((ls) => ls.filter((l) => l.id !== lead.id));
+      }
+    } catch (err) {
+      setLeads(prev);
+      toast.error(err instanceof Error ? err.message : "فشل التحديث");
+    }
+  };
+
+  const openNotes = (lead: Lead) => {
+    setNotesLead(lead);
+    setNotesDraft(lead.notes ?? "");
+  };
+
+  const saveNotes = async () => {
+    if (!notesLead) return;
+    setSavingNotes(true);
+    try {
+      await patchLead({ data: { id: notesLead.id, notes: notesDraft || null } });
+      setLeads((ls) => ls.map((l) => (l.id === notesLead.id ? { ...l, notes: notesDraft || null } : l)));
+      toast.success("تم حفظ الملاحظات");
+      setNotesLead(null);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "خطأ");
+    } finally {
+      setSavingNotes(false);
+    }
+  };
+
   const rowsForExport = () =>
     leads.map((l) => ({
       "الاسم": l.name,
@@ -124,6 +188,8 @@ function AdminPage() {
       "جودة المحتوى": l.content_score ?? "",
       "الموثوقية": l.authority_score ?? "",
       "الحالة": l.status,
+      "المرحلة": STAGE_META[l.stage]?.label ?? l.stage,
+      "الملاحظات": l.notes ?? "",
       "التاريخ": new Date(l.created_at).toLocaleString("ar-EG"),
       "رابط التقرير": `${window.location.origin}/report/${l.id}`,
       "ID": l.id,
@@ -207,12 +273,36 @@ function AdminPage() {
             <Input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
           </div>
           <div className="mt-3 flex justify-end">
-            <Button onClick={load} disabled={loading} className="gap-2">
+            <Button onClick={() => load()} disabled={loading} className="gap-2">
               <Search className="size-4" />
               {loading ? "جاري..." : "تطبيق"}
             </Button>
           </div>
         </Card>
+
+        {/* Stage tabs / folders */}
+        <div className="flex flex-wrap gap-2">
+          {STAGE_ORDER.map((s) => {
+            const active = stageFilter === s;
+            const count = counts[s] ?? 0;
+            return (
+              <button
+                key={s}
+                onClick={() => { setStageFilter(s); load(s); }}
+                className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all ${
+                  active
+                    ? "bg-gradient-hero text-white border-transparent shadow-glow"
+                    : "bg-card hover:bg-accent border-border"
+                }`}
+              >
+                {STAGE_META[s].label}
+                <span className={`ms-2 inline-flex items-center justify-center min-w-6 h-5 px-1.5 rounded-full text-xs ${active ? "bg-white/25" : "bg-muted"}`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
         <Card className="p-0 overflow-hidden">
           <div className="p-4 border-b flex items-center justify-between gap-2 flex-wrap">
@@ -282,14 +372,15 @@ function AdminPage() {
                   <TableHead>AI</TableHead>
                   <TableHead>GEO</TableHead>
                   <TableHead>SEO</TableHead>
-                  <TableHead>الحالة</TableHead>
+                  <TableHead>المرحلة</TableHead>
+                  <TableHead>ملاحظات</TableHead>
                   <TableHead>التاريخ</TableHead>
                   <TableHead>التقرير</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {leads.length === 0 && !loading && (
-                  <TableRow><TableCell colSpan={12} className="text-center py-8 text-muted-foreground">لا توجد نتائج</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={13} className="text-center py-8 text-muted-foreground">لا توجد نتائج</TableCell></TableRow>
                 )}
                 {leads.map((l) => (
                   <TableRow key={l.id} data-state={selected.has(l.id) ? "selected" : undefined}>
@@ -317,9 +408,29 @@ function AdminPage() {
                     <TableCell>{l.geo_score ?? "—"}</TableCell>
                     <TableCell>{l.seo_score ?? "—"}</TableCell>
                     <TableCell>
-                      <Badge variant={l.status === "completed" ? "default" : l.status === "failed" ? "destructive" : "secondary"}>
-                        {l.status === "completed" ? "مكتمل" : l.status === "failed" ? "فشل" : "قيد التنفيذ"}
-                      </Badge>
+                      <Select value={l.stage} onValueChange={(v) => changeStage(l, v as LeadStage)}>
+                        <SelectTrigger className={`h-8 w-[130px] text-xs font-semibold ${STAGE_META[l.stage]?.badge ?? ""}`}>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(Object.keys(STAGE_META) as (LeadStage | "all")[])
+                            .filter((s) => s !== "all")
+                            .map((s) => (
+                              <SelectItem key={s} value={s}>{STAGE_META[s].label}</SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        size="sm"
+                        variant={l.notes ? "default" : "outline"}
+                        className="h-8 gap-1 text-xs"
+                        onClick={() => openNotes(l)}
+                      >
+                        <StickyNote className="size-3.5" />
+                        {l.notes ? "عرض" : "إضافة"}
+                      </Button>
                     </TableCell>
                     <TableCell className="text-xs">{new Date(l.created_at).toLocaleDateString("ar")}</TableCell>
                     <TableCell>
@@ -335,6 +446,30 @@ function AdminPage() {
         </Card>
 
       </div>
+
+      {/* Notes dialog */}
+      <Dialog open={!!notesLead} onOpenChange={(o) => { if (!o) setNotesLead(null); }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>ملاحظات — {notesLead?.name}</DialogTitle>
+            <DialogDescription>
+              سجّل تفاصيل المكالمة، نقاط الاهتمام، وأي متابعة مطلوبة.
+            </DialogDescription>
+          </DialogHeader>
+          <Textarea
+            rows={8}
+            placeholder="اكتب ملاحظاتك هنا..."
+            value={notesDraft}
+            onChange={(e) => setNotesDraft(e.target.value)}
+          />
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setNotesLead(null)}>إلغاء</Button>
+            <Button onClick={saveNotes} disabled={savingNotes} className="bg-gradient-hero">
+              {savingNotes ? "جاري الحفظ..." : "حفظ"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
