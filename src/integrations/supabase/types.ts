@@ -27,9 +27,11 @@ export type Database = {
           id: string
           marketing_consent: boolean
           name: string
+          notes: string | null
           phone: string | null
           report: Json | null
           seo_score: number | null
+          stage: Database["public"]["Enums"]["lead_stage"]
           status: string
           website_url: string
         }
@@ -45,9 +47,11 @@ export type Database = {
           id?: string
           marketing_consent?: boolean
           name: string
+          notes?: string | null
           phone?: string | null
           report?: Json | null
           seo_score?: number | null
+          stage?: Database["public"]["Enums"]["lead_stage"]
           status?: string
           website_url: string
         }
@@ -63,9 +67,11 @@ export type Database = {
           id?: string
           marketing_consent?: boolean
           name?: string
+          notes?: string | null
           phone?: string | null
           report?: Json | null
           seo_score?: number | null
+          stage?: Database["public"]["Enums"]["lead_stage"]
           status?: string
           website_url?: string
         }
@@ -107,6 +113,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      lead_stage: "new" | "contacted" | "interested" | "customer" | "lost"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -235,6 +242,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      lead_stage: ["new", "contacted", "interested", "customer", "lost"],
     },
   },
 } as const
