@@ -14,6 +14,9 @@ async function assertAdmin(userId: string) {
   if (!data) throw new Error("صلاحيات المسؤول مطلوبة");
 }
 
+const STAGES = ["new", "contacted", "interested", "customer", "lost"] as const;
+export type LeadStage = (typeof STAGES)[number];
+
 export const listLeads = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
@@ -23,6 +26,7 @@ export const listLeads = createServerFn({ method: "POST" })
         minScore: z.number().min(0).max(100).optional(),
         from: z.string().optional(),
         to: z.string().optional(),
+        stage: z.enum(STAGES).optional(),
       })
       .parse(input ?? {}),
   )
@@ -41,11 +45,41 @@ export const listLeads = createServerFn({ method: "POST" })
     if (typeof data.minScore === "number") q = q.gte("ai_visibility_score", data.minScore);
     if (data.from) q = q.gte("created_at", data.from);
     if (data.to) q = q.lte("created_at", data.to);
+    if (data.stage) q = q.eq("stage", data.stage);
 
     const { data: leads, error } = await q;
     if (error) throw new Error(error.message);
-    return { leads: leads ?? [] };
+
+    // Stage counts (ignoring stage filter)
+    const { data: allStages } = await supabaseAdmin.from("leads").select("stage");
+    const counts: Record<string, number> = { all: allStages?.length ?? 0, new: 0, contacted: 0, interested: 0, customer: 0, lost: 0 };
+    (allStages ?? []).forEach((r: { stage: string | null }) => {
+      const s = r.stage ?? "new";
+      counts[s] = (counts[s] ?? 0) + 1;
+    });
+
+    return { leads: leads ?? [], counts };
   });
+
+export const updateLead = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z.object({
+      id: z.string().uuid(),
+      stage: z.enum(STAGES).optional(),
+      notes: z.string().max(5000).nullable().optional(),
+    }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.userId);
+    const patch: Record<string, unknown> = {};
+    if (data.stage !== undefined) patch.stage = data.stage;
+    if (data.notes !== undefined) patch.notes = data.notes;
+    const { error } = await supabaseAdmin.from("leads").update(patch).eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 
 export const checkIsAdmin = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
