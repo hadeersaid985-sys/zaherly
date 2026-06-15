@@ -205,13 +205,13 @@ function ReportPage() {
                 msg: `مرحباً ظاهرلي، أرغب في حجز خطة الـ ٣٠ يوم (${PRICING.plan30.price} ${PRICING.plan30.currency})`,
               },
               {
-                t: "خطة ٦٠ يوم — التوسع",
+                t: "خطة ٣٠ يوم — التوسع",
                 price: PRICING.plan60.price,
                 currency: PRICING.plan60.currency,
                 monthly: true,
                 items: [...report.actionPlan.days30, ...report.actionPlan.days60],
                 color: "bg-chart-2/10 border-chart-2/30",
-                msg: `مرحباً ظاهرلي، أرغب في حجز خطة الـ ٦٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency} شهرياً)`,
+                msg: `مرحباً ظاهرلي، أرغب في حجز خطة الـ ٣٠ يوم (${PRICING.plan60.price} ${PRICING.plan60.currency} شهرياً)`,
               },
             ].map((p) => (
               <div key={p.t} className={`p-5 rounded-xl border-2 ${p.color} flex flex-col`}>
