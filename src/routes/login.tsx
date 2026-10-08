@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "دخول المسؤول — ظاهرلي" }] }),
+  head: () => ({ meta: [{ title: "تسجيل الدخول — ظاهرلي" }] }),
   component: LoginPage,
 });
 
@@ -23,7 +23,7 @@ function LoginPage() {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate({ to: "/admin" });
+      if (session) navigate({ to: "/dashboard" });
     });
     return () => subscription.unsubscribe();
   }, [navigate]);
@@ -36,7 +36,7 @@ function LoginPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/admin" },
+          options: { emailRedirectTo: window.location.origin + "/dashboard" },
         });
         if (error) throw error;
         toast.success("تم إنشاء الحساب! جاري الدخول...");
@@ -58,10 +58,10 @@ function LoginPage() {
           <BrandLogo className="h-20 md:h-24 w-auto" />
         </Link>
         <h1 className="text-2xl font-bold text-center mb-2">
-          {mode === "signin" ? "دخول لوحة المسؤول" : "إنشاء حساب مسؤول"}
+          {mode === "signin" ? "تسجيل الدخول" : "إنشاء حساب جديد"}
         </h1>
         <p className="text-sm text-muted-foreground text-center mb-6">
-          {mode === "signup" ? "أول حساب يُنشأ يُمنح صلاحيات المسؤول تلقائياً" : "أدخل بياناتك للوصول للوحة التحكم"}
+          {mode === "signup" ? "أنشئ حسابك لمتابعة تقاريرك وأدواتك" : "أدخل بياناتك للوصول للوحة التحكم"}
         </p>
         <form onSubmit={submit} className="space-y-4">
           <div>
@@ -76,6 +76,9 @@ function LoginPage() {
             {loading ? "جاري..." : mode === "signin" ? "دخول" : "إنشاء حساب"}
           </Button>
         </form>
+        <button type="button" onClick={() => setMode(mode === "signin" ? "signup" : "signin")} className="mt-4 w-full text-sm text-primary hover:underline">
+          {mode === "signin" ? "ليس لديك حساب؟ أنشئ حساباً" : "لديك حساب؟ سجّل الدخول"}
+        </button>
       </Card>
     </div>
   );

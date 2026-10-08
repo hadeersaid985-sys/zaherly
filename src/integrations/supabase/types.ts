@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      content_items: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          kind: string
+          topic: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          kind: string
+          topic: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          topic?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      customer_features: {
+        Row: {
+          created_at: string
+          feature: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feature: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feature?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           ai_visibility_score: number | null
@@ -33,6 +81,7 @@ export type Database = {
           seo_score: number | null
           stage: Database["public"]["Enums"]["lead_stage"]
           status: string
+          user_id: string | null
           website_url: string
         }
         Insert: {
@@ -53,6 +102,7 @@ export type Database = {
           seo_score?: number | null
           stage?: Database["public"]["Enums"]["lead_stage"]
           status?: string
+          user_id?: string | null
           website_url: string
         }
         Update: {
@@ -73,6 +123,7 @@ export type Database = {
           seo_score?: number | null
           stage?: Database["public"]["Enums"]["lead_stage"]
           status?: string
+          user_id?: string | null
           website_url?: string
         }
         Relationships: []
