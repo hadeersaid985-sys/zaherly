@@ -127,7 +127,7 @@ const TOOL_SCHEMA = {
   additionalProperties: false,
 };
 
-async function runAI(crawl: Awaited<ReturnType<typeof crawlWebsite>>, businessType: string): Promise<AnalysisReport> {
+export async function runAI(crawl: Awaited<ReturnType<typeof crawlWebsite>>, businessType: string): Promise<AnalysisReport> {
   const apiKey = process.env.LOVABLE_API_KEY;
   if (!apiKey) throw new Error("LOVABLE_API_KEY غير مُهيّأ");
 
