@@ -26,7 +26,7 @@ export const Route = createFileRoute("/report/$id")({
     <div className="min-h-screen flex items-center justify-center p-6 text-center">
       <div>
         <h1 className="text-2xl font-bold mb-2">تعذر تحميل التقرير</h1>
-        <p className="text-muted-foreground mb-4">{error.message}</p>
+        <p className="text-muted-foreground mb-4">{(error as Error).message}</p>
         <Link to="/" className="text-primary underline">العودة للرئيسية</Link>
       </div>
     </div>
