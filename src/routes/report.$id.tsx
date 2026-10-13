@@ -18,6 +18,14 @@ import { Bot, Download, CheckCircle2, AlertTriangle, Sparkles, FileText, Calenda
 import { WHATSAPP_LINK, PRICING } from "@/lib/contact";
 
 export const Route = createFileRoute("/report/$id")({
+  head: () => ({ meta: [
+    { title: "تقرير الظهور في الذكاء الاصطناعي — ظاهرلي" },
+    { name: "description", content: "نتائج تحليل GEO و SEO وجاهزية موقعك للظهور في ChatGPT مع توصيات وخطة عمل من ظاهرلي." },
+    { property: "og:title", content: "تقرير الظهور في الذكاء الاصطناعي — ظاهرلي" },
+    { property: "og:description", content: "تقييم موقعك وتوصيات تحسين الظهور في البحث والذكاء الاصطناعي." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   loader: async ({ params, context }) => {
     return context.queryClient.ensureQueryData(reportQueryOptions(params.id));
   },

@@ -90,11 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "ظاهرلي" },
-      { name: "description", content: "ظاهرلي لتحليل مواقع مجانا" },
-      { property: "og:description", content: "ظاهرلي لتحليل مواقع مجانا" },
       { name: "twitter:description", content: "ظاهرلي لتحليل مواقع مجانا" },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/4IfthOvnbuZyHjpCIRtOAMmomJq2/social-images/social-1781000948247-image_2026-06-09_122908117.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/4IfthOvnbuZyHjpCIRtOAMmomJq2/social-images/social-1781000948247-image_2026-06-09_122908117.webp" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

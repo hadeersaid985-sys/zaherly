@@ -27,7 +27,14 @@ import * as XLSX from "xlsx";
 
 
 export const Route = createFileRoute("/_authenticated/admin")({
-  head: () => ({ meta: [{ title: "لوحة المسؤول — ظاهرلي" }] }),
+  head: () => ({ meta: [
+    { title: "لوحة المسؤول — ظاهرلي" },
+    { name: "description", content: "إدارة العملاء المحتملين ومتابعة التقارير ومراحل التواصل في ظاهرلي." },
+    { property: "og:title", content: "لوحة المسؤول — ظاهرلي" },
+    { property: "og:description", content: "إدارة العملاء وتقارير الظهور في ظاهرلي." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: AdminPage,
 });
 

@@ -10,7 +10,14 @@ import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "تسجيل الدخول — ظاهرلي" }] }),
+  head: () => ({ meta: [
+    { title: "تسجيل الدخول — ظاهرلي" },
+    { name: "description", content: "سجّل الدخول إلى ظاهرلي لمتابعة تقارير موقعك وأدوات الظهور في الذكاء الاصطناعي." },
+    { property: "og:title", content: "تسجيل الدخول — ظاهرلي" },
+    { property: "og:description", content: "حسابك وتقاريرك وأدواتك في ظاهرلي." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: LoginPage,
 });
 
