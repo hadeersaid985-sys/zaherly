@@ -86,6 +86,8 @@
   --gradient-card: linear-gradient(180deg, oklch(1 0 0), oklch(0.97 0.015 235));
   --shadow-elegant: 0 20px 60px -20px color-mix(in oklab, oklch(0.45 0.17 250) 35%, transparent);
   --shadow-glow: 0 0 80px color-mix(in oklab, oklch(0.72 0.15 230) 40%, transparent);
+  --home-surface: oklch(0.975 0.012 245);
+  --home-nav-shadow: 0 4px 24px color-mix(in oklab, var(--foreground) 5%, transparent);
 }
 
 .dark {
@@ -125,8 +127,41 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
+}
+
+.home-container { max-width: 1160px; margin-inline: auto; padding-inline: 24px; }
+.home-header { padding: 12px 24px; background: color-mix(in oklab, var(--background) 94%, transparent); backdrop-filter: blur(16px); }
+.home-nav { max-width: 1160px; min-height: 66px; padding: 6px 18px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--home-nav-shadow); }
+.home-hero { padding: 42px 0 45px; background: var(--home-surface); }
+.hero-eyebrow { padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.hero-search { border: 1px solid var(--border); border-radius: 8px; background: var(--card); box-shadow: var(--home-nav-shadow); }
+.home-stats { background: var(--card); }
+.stat-item + .stat-item { border-inline-start: 1px solid var(--border); }
+.home-analysis { padding-block: 88px; }
+.section-kicker { color: var(--primary); font-size: 14px; font-weight: 700; }
+.analysis-form { padding: 28px; background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--primary); border-radius: 8px; box-shadow: var(--home-nav-shadow); }
+.analysis-form label { display: inline-block; margin-bottom: 7px; }
+.analysis-form input { min-height: 44px; }
+.home-features { padding-block: 76px; background: var(--home-surface); }
+.feature-item { border-radius: 8px; box-shadow: none; }
+.home-shift .group { border-radius: 8px; }
+.home-contact { padding-block: 64px; }
+@media (max-width: 639px) {
+  .home-container { padding-inline: 20px; }
+  .home-header { padding: 8px 12px; }
+  .home-nav { padding-inline: 12px; min-height: 60px; }
+  .home-hero { padding-top: 32px; padding-bottom: 36px; }
+  .home-hero h1 { font-size: 34px; }
+  .home-hero > img { opacity: 0.45; }
+  .home-analysis { padding-block: 56px; }
+  .analysis-form { padding: 22px; }
+  .stat-item:nth-child(3) { border-inline-start: 0; }
+  .home-features { padding-block: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-hero *, .home-features *, .home-shift * { animation: none; transition: none; }
 }
 
 @layer utilities {
