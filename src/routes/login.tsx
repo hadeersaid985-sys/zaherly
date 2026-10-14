@@ -29,8 +29,11 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate({ to: "/dashboard" });
+    let done = false;
+    const go = () => { if (!done) { done = true; navigate({ to: "/dashboard", replace: true }); } };
+    supabase.auth.getSession().then(({ data }) => { if (data.session) go(); });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) go();
     });
     return () => subscription.unsubscribe();
   }, [navigate]);
