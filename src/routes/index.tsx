@@ -78,6 +78,7 @@ function HomePage() {
           <nav aria-label="القائمة الرئيسية" className="hidden md:flex items-center gap-7 text-sm font-semibold text-muted-foreground">
             <a href="#report-features" className="hover:text-primary">ماذا يحتوي التقرير؟</a>
             <a href="#why-now" className="hover:text-primary">لماذا ظاهرلي؟</a>
+            <Link to="/agencies" className="hover:text-primary">للوكالات</Link>
           </nav>
           <div className="flex items-center gap-2">
             {signedIn && <Button asChild variant="outline" size="sm" className="h-10 px-3"><Link to="/dashboard">لوحتي</Link></Button>}
