@@ -3,7 +3,6 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { startAnalysis } from "@/lib/analyze.functions";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/brand-logo";
 import { Input } from "@/components/ui/input";
@@ -37,16 +36,6 @@ function HomePage() {
   const navigate = useNavigate();
   const analyze = useServerFn(startAnalysis);
   const [loading, setLoading] = useState(false);
-  const [signedIn, setSignedIn] = useState(false);
-
-  useEffect(() => {
-    let alive = true;
-    supabase.auth.getSession().then(({ data }) => { if (alive) setSignedIn(Boolean(data.session)); });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (alive) setSignedIn(Boolean(session));
-    });
-    return () => { alive = false; subscription.unsubscribe(); };
-  }, []);
   const [form, setForm] = useState({
     websiteUrl: "",
     businessType: "",
@@ -81,7 +70,6 @@ function HomePage() {
             <Link to="/agencies" className="hover:text-primary">للوكالات</Link>
           </nav>
           <div className="flex items-center gap-2">
-            {signedIn && <Button asChild variant="outline" size="sm" className="h-10 px-3"><Link to="/dashboard">لوحتي</Link></Button>}
             <Button asChild size="sm" className="h-10 px-3 sm:px-4"><a href={sampleReport.url} target="_blank" rel="noopener noreferrer"><FileSearch className="size-4" /><span className="hidden sm:inline">شاهد النتائج التي حققناها</span><span className="sm:hidden">النتائج</span></a></Button>
           </div>
         </div>
