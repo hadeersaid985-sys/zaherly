@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      agency_members: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          member_id: string | null
+          owner_id: string
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          member_id?: string | null
+          owner_id: string
+          role?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          member_id?: string | null
+          owner_id?: string
+          role?: string
+        }
+        Relationships: []
+      }
       content_items: {
         Row: {
           body: string
@@ -58,6 +85,30 @@ export type Database = {
           created_at?: string
           feature?: string
           id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      growth_records: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          payload: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          payload?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          payload?: Json
           user_id?: string
         }
         Relationships: []
@@ -154,6 +205,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      agency_access: {
+        Args: { edit?: boolean; owner: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

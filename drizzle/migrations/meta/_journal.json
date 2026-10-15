@@ -8,6 +8,13 @@
       "when": 1791448801637,
       "tag": "0000_customer_system",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792057933157,
+      "tag": "0001_growth_workspace",
+      "breakpoints": true
     }
   ]
 }
