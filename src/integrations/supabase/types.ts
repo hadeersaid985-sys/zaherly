@@ -47,6 +47,9 @@ export type Database = {
           created_at: string
           id: string
           kind: string
+          review_status: string
+          reviewed_at: string | null
+          source_report_id: string | null
           topic: string
           user_id: string
         }
@@ -55,6 +58,9 @@ export type Database = {
           created_at?: string
           id?: string
           kind: string
+          review_status?: string
+          reviewed_at?: string | null
+          source_report_id?: string | null
           topic: string
           user_id: string
         }
@@ -63,6 +69,9 @@ export type Database = {
           created_at?: string
           id?: string
           kind?: string
+          review_status?: string
+          reviewed_at?: string | null
+          source_report_id?: string | null
           topic?: string
           user_id?: string
         }
