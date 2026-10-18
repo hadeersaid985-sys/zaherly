@@ -3,7 +3,9 @@
 - [x] Preserve the analysis form, report link, statistics, and WhatsApp links.
 - [x] Verify desktop and mobile presentation and existing interactions.
 - [ ] Add public report preview, results, pricing, business/store pages, FAQs and educational resources.
-- [ ] Extend customer tools with competitors, evidence, improvement tasks, history and report-informed content.
+- [ ] Extend customer tools with up to three competitors and documented mentions by engine.
+- [ ] Add score evidence, prioritized completion tracking and same-site report comparisons.
+- [ ] Add report-informed content suggestions and client review before publication.
 - [ ] Add downloadable periodic reports and agency client/team management.
 - [ ] Add admin followups and subscription tracking.
 - [ ] Enable customer analytics imports; live analytics/store connections require customer authorization.
