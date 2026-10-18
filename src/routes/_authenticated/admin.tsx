@@ -62,10 +62,11 @@ const STAGE_META: Record<LeadStage | "all", { label: string; badge: string }> = 
   new: { label: "جديد", badge: "bg-blue-500/15 text-blue-600 border border-blue-500/30" },
   contacted: { label: "تم التواصل", badge: "bg-amber-500/15 text-amber-600 border border-amber-500/30" },
   interested: { label: "مهتم", badge: "bg-purple-500/15 text-purple-600 border border-purple-500/30" },
+  not_interested: { label: "غير مهتم", badge: "bg-muted text-muted-foreground border border-border" },
   customer: { label: "عميل", badge: "bg-emerald-500/15 text-emerald-600 border border-emerald-500/30" },
   lost: { label: "مرفوض", badge: "bg-rose-500/15 text-rose-600 border border-rose-500/30" },
 };
-const STAGE_ORDER: (LeadStage | "all")[] = ["all", "new", "contacted", "interested", "customer", "lost"];
+const STAGE_ORDER: (LeadStage | "all")[] = ["all", "new", "contacted", "interested", "not_interested", "customer", "lost"];
 
 function AdminPage() {
   const fetchLeads = useServerFn(listLeads);
@@ -75,7 +76,7 @@ function AdminPage() {
   const patchLead = useServerFn(updateLead);
 
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [counts, setCounts] = useState<Record<string, number>>({ all: 0, new: 0, contacted: 0, interested: 0, customer: 0, lost: 0 });
+  const [counts, setCounts] = useState<Record<string, number>>({ all: 0, new: 0, contacted: 0, interested: 0, not_interested: 0, customer: 0, lost: 0 });
   const [stageFilter, setStageFilter] = useState<LeadStage | "all">("all");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [deleting, setDeleting] = useState(false);
