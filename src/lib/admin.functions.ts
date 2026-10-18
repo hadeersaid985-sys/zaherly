@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { LEAD_STAGES as STAGES, type LeadStage } from "@/lib/lead-stages";
+export type { LeadStage } from "@/lib/lead-stages";
 
 async function assertAdmin(userId: string) {
   const { data, error } = await supabaseAdmin
@@ -14,8 +16,6 @@ async function assertAdmin(userId: string) {
   if (!data) throw new Error("صلاحيات المسؤول مطلوبة");
 }
 
-const STAGES = ["new", "contacted", "interested", "customer", "lost"] as const;
-export type LeadStage = (typeof STAGES)[number];
 
 export const listLeads = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -52,7 +52,7 @@ export const listLeads = createServerFn({ method: "POST" })
 
     // Stage counts (ignoring stage filter)
     const { data: allStages } = await supabaseAdmin.from("leads").select("stage");
-    const counts: Record<string, number> = { all: allStages?.length ?? 0, new: 0, contacted: 0, interested: 0, customer: 0, lost: 0 };
+    const counts: Record<string, number> = { all: allStages?.length ?? 0, new: 0, contacted: 0, interested: 0, not_interested: 0, customer: 0, lost: 0 };
     (allStages ?? []).forEach((r: { stage: string | null }) => {
       const s = r.stage ?? "new";
       counts[s] = (counts[s] ?? 0) + 1;
