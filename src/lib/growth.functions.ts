@@ -12,7 +12,8 @@ export async function requireTool(db: DB, userId: string, feature: "geo" | "seo"
     db.from("customer_features").select("id").eq("user_id",userId).eq("feature",feature).maybeSingle(),
     db.rpc("has_role",{_user_id:userId,_role:"admin"}),
   ]);
-  if (!enabled && !admin) throw new Error("هذه الأداة مقفلة لحسابك");
+  const { getTrial } = await import("./trial.server");
+  if (!enabled && !admin && !(await getTrial(db, userId)).active) throw new Error("هذه الأداة مقفلة لحسابك");
 }
 export const getGrowthWorkspace = createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async ({context}) => {
   const {data,error} = await context.supabase.from("growth_records").select("id,kind,payload,created_at").eq("user_id",context.userId).in("kind",["competitor","evidence","task"]).order("created_at",{ascending:false}).limit(1000);

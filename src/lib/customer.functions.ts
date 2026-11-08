@@ -34,6 +34,7 @@ export const getMyDashboard = createServerFn({ method: "GET" })
       isAdmin(context.userId),
     ]);
     return {
+      trial: await (await import("./trial.server")).getTrial(context.supabase, context.userId),
       reports: (leads ?? []) as Array<{
         id: string; website_url: string; business_type: string; ai_visibility_score: number | null;
         geo_score: number | null; seo_score: number | null; content_score: number | null; authority_score: number | null;
@@ -51,6 +52,11 @@ export const runMyAnalysis = createServerFn({ method: "POST" })
     z.object({ websiteUrl: z.string().trim().min(3).max(500), businessType: z.string().trim().min(2).max(200) }).parse(i),
   )
   .handler(async ({ data, context }) => {
+    const { data: setup } = await context.supabase.from("site_setups").select("id").eq("user_id", context.userId).eq("site", (await import("./growth-rules")).siteKey(data.websiteUrl)).not("completed_at", "is", null).maybeSingle();
+    if (!setup) throw new Error("أكمل إعداد الموقع قبل أول تحليل");
+    const { getTrial } = await import("./trial.server");
+    const trial = await getTrial(context.supabase, context.userId);
+    if (!trial.active && !(await hasFeature(context.userId, "geo")) && !(await hasFeature(context.userId, "seo")) && !(await isAdmin(context.userId))) throw new Error("انتهت التجربة المجانية؛ فعّل اشتراكك لإجراء تحليل جديد");
     const db = await admin();
     const { crawlWebsite } = await import("./crawler.server");
     const { runAI } = await import("./analyze.functions");
@@ -129,11 +135,13 @@ export const generateContent = createServerFn({ method: "POST" })
     z.object({ kind: z.enum(["article", "faq", "landing", "social"]), topic: z.string().trim().min(3).max(300), business: z.string().trim().max(200).optional() }).parse(i),
   )
   .handler(async ({ data, context }) => {
-    if (!(await hasFeature(context.userId, "content")) && !(await isAdmin(context.userId))) throw new Error("هذه الأداة مقفلة لحسابك");
+    const { getTrial } = await import("./trial.server");
+    if (!(await getTrial(context.supabase, context.userId)).active && !(await hasFeature(context.userId, "content")) && !(await isAdmin(context.userId))) throw new Error("هذه الأداة مقفلة لحسابك");
     const body = await streamResponses(`اكتب ${KINDS[data.kind]} عن: ${data.topic}${data.business ? `\nنوع النشاط: ${data.business}` : ""}\nاجعله محسّناً للظهور في محركات البحث وفي إجابات ChatGPT و Gemini.`);
     const db = await admin();
     const { data: row } = await db.from("content_items").insert({ user_id: context.userId, kind: data.kind, topic: data.topic, body }).select("id, kind, topic, body, created_at").single();
-    return row!;
+    if (!row) throw new Error("تعذر حفظ المحتوى");
+    return row;
   });
 
 export const listMyContent = createServerFn({ method: "GET" })
