@@ -98,6 +98,24 @@ export type Database = {
         }
         Relationships: []
       }
+      customer_trials: {
+        Row: {
+          expires_at: string
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          expires_at?: string
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          expires_at?: string
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       growth_records: {
         Row: {
           created_at: string
@@ -185,6 +203,33 @@ export type Database = {
           status?: string
           user_id?: string | null
           website_url?: string
+        }
+        Relationships: []
+      }
+      site_setups: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          payload: Json
+          site: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          payload?: Json
+          site: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          payload?: Json
+          site?: string
+          user_id?: string
         }
         Relationships: []
       }

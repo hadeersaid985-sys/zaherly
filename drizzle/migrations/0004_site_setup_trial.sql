@@ -1,0 +1,10 @@
+CREATE TABLE public.customer_trials (user_id uuid PRIMARY KEY, started_at timestamptz NOT NULL DEFAULT now(), expires_at timestamptz NOT NULL DEFAULT (now() + interval '7 days'));
+GRANT SELECT ON public.customer_trials TO authenticated;
+GRANT ALL ON public.customer_trials TO service_role;
+ALTER TABLE public.customer_trials ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users read own trial" ON public.customer_trials FOR SELECT TO authenticated USING (user_id=auth.uid());
+CREATE TABLE public.site_setups (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), user_id uuid NOT NULL, site text NOT NULL, payload jsonb NOT NULL DEFAULT '{}', completed_at timestamptz, created_at timestamptz NOT NULL DEFAULT now(), UNIQUE(user_id,site));
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.site_setups TO authenticated;
+GRANT ALL ON public.site_setups TO service_role;
+ALTER TABLE public.site_setups ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users manage own setups" ON public.site_setups FOR ALL TO authenticated USING(user_id=auth.uid()) WITH CHECK(user_id=auth.uid());

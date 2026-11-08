@@ -1,4 +1,5 @@
 # Tasks
+- [ ] Add five-step automatic site setup and seven-day free trial with per-customer Google authorization.
 - [x] Redesign the homepage with a spacious reference-inspired direction and existing Zaherly colors.
 - [x] Preserve the analysis form, report link, statistics, and WhatsApp links.
 - [x] Verify desktop and mobile presentation and existing interactions.
