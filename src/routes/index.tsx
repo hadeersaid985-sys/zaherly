@@ -87,6 +87,7 @@ function HomePage() {
             <Button type="button" className="h-11 shrink-0 px-4" onClick={() => { document.getElementById("free-analysis")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); document.getElementById(form.websiteUrl ? "businessType" : "websiteUrl")?.focus({ preventScroll: true }); }}>تحليل مجاني<ArrowLeft className="size-4" /></Button>
           </div>
           <div className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-muted-foreground"><span className="flex items-center gap-1.5"><Search className="size-4 text-primary" />زحف حقيقي للموقع</span><span className="flex items-center gap-1.5"><TrendingUp className="size-4 text-primary" />تقييم GEO و SEO</span><span className="flex items-center gap-1.5"><FileText className="size-4 text-primary" />تقرير PDF كامل</span></div>
+          <div className="mt-5"><Button asChild variant="outline"><Link to="/login" search={{trial:true}}>جرّب ظاهرلي على موقعك 7 أيام ببلاش<ArrowLeft className="size-4" /></Link></Button></div>
           <div className="mt-8 flex justify-center items-center gap-5 text-sm font-semibold text-muted-foreground" dir="ltr"><span>ChatGPT</span><span className="h-4 border-s border-border" /><span>Gemini</span><span className="h-4 border-s border-border" /><span>Google</span></div>
         </div>
       </section>

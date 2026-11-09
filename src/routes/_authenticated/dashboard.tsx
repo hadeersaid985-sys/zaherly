@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { BrandLogo } from "@/components/brand-logo";
+import { SiteSetupWizard } from "@/components/site-setup";
+import { startFreeTrial, getSiteSetups } from "@/lib/setup.functions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,15 +34,16 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
 });
 
-type Tab = "overview" | "reports" | "geo" | "seo" | "content" | "billing" | "customers";
+type Tab = "overview" | "reports" | "geo" | "seo" | "content" | "billing" | "customers" | "setup";
 
 function Dashboard() {
   const [tab, setTab] = useState<Tab>("overview");
   const fetchDash = useServerFn(getMyDashboard);
+  const beginTrial = useServerFn(startFreeTrial);
   const { data, isLoading, refetch } = useQuery({ queryKey: ["my-dashboard"], queryFn: () => fetchDash() });
   const navigate = useNavigate();
   const qc = useQueryClient();
-  const has = (f: Feature) => !!data && (data.isAdmin || data.features.includes(f));
+  const has = (f: Feature) => !!data && (data.isAdmin || data.trial.active || data.features.includes(f));
 
   const signOut = async () => {
     await qc.cancelQueries(); qc.clear();
@@ -49,7 +52,7 @@ function Dashboard() {
   };
 
   const nav: { group: string; items: { id: Tab; label: string; icon: typeof Home; feature?: Feature }[] }[] = [
-    { group: "الرئيسية", items: [{ id: "overview", label: "نظرة عامة", icon: Home }] },
+    { group: "الرئيسية", items: [{ id: "overview", label: "نظرة عامة", icon: Home }, { id: "setup", label: "إضافة موقع", icon: Globe }] },
     { group: "التقارير", items: [{ id: "reports", label: "تقاريري", icon: FileText }] },
     { group: "قياس", items: [{ id: "geo", label: "تحليل GEO", icon: Globe, feature: "geo" }, { id: "seo", label: "وكيل SEO", icon: Zap, feature: "seo" }] },
     { group: "تنفيذ", items: [{ id: "content", label: "كاتب المحتوى الذكي", icon: PenTool, feature: "content" }] },
@@ -87,13 +90,16 @@ function Dashboard() {
         </div>
       </aside>
 
-      <main className="flex-1 p-4 md:p-8 max-w-5xl">
+      <main className="flex-1 min-w-0 p-4 md:p-8">
+        {data && <div className="mb-7 flex flex-wrap gap-3 items-center justify-between border-b border-primary/20 bg-primary/5 p-4 text-sm"><div>{data.trial.active ? <><strong className="text-primary">تجربتك المجانية: باقي {data.trial.daysLeft} أيام</strong><span className="text-muted-foreground"> · تنتهي {new Date(data.trial.expiresAt ?? "").toLocaleDateString("ar-EG")}</span></> : data.trial.startedAt ? <strong>انتهت تجربتك المجانية</strong> : <strong>جرّب ظاهرلي على موقعك 7 أيام ببلاش</strong>}</div>{!data.trial.startedAt ? <Button size="sm" onClick={async()=>{try{await beginTrial();await refetch();setTab("setup");}catch(e){toast.error(e instanceof Error?e.message:"تعذر بدء التجربة");}}}>ابدأ التجربة المجانية</Button> : <Button variant="outline" size="sm" onClick={()=>setTab("billing")}>الاشتراك الآن</Button>}</div>}
         {isLoading || !data ? (
           <div className="flex justify-center py-20"><Loader2 className="animate-spin" /></div>
+        ) : tab === "setup" ? (
+          <SiteSetupWizard onDone={()=>{refetch();qc.invalidateQueries({queryKey:["site-setups"]});setTab("reports");}} />
         ) : tab === "overview" ? (
-          <Overview latest={latest} count={data.reports.length} onNew={() => setTab("reports")} />
+          <Overview latest={latest} count={data.reports.length} onNew={() => setTab("setup")} />
         ) : tab === "reports" ? (
-          <Reports reports={data.reports} onDone={() => refetch()} />
+          <Reports reports={data.reports} onDone={() => refetch()} onSetup={()=>setTab("setup")} />
         ) : tab === "geo" ? (
           has("geo") ? <RecList title="تحليل GEO" latest={latest} pick={(r) => r.geoRecommendations} score={latest?.geo_score} /> : <Locked name="تحليل GEO" />
         ) : tab === "seo" ? (
@@ -154,8 +160,10 @@ function Overview({ latest, count, onNew }: { latest: any; count: number; onNew:
   );
 }
 
-function Reports({ reports, onDone }: { reports: any[]; onDone: () => void }) {
+function Reports({ reports, onDone, onSetup }: { reports: any[]; onDone: () => void; onSetup:()=>void }) {
   const run = useServerFn(runMyAnalysis);
+  const fetchSetups = useServerFn(getSiteSetups);
+  const {data:setups}=useQuery({queryKey:["site-setups"],queryFn:()=>fetchSetups()});
   const [url, setUrl] = useState(""); const [biz, setBiz] = useState(""); const [loading, setLoading] = useState(false);
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setLoading(true);
@@ -166,9 +174,10 @@ function Reports({ reports, onDone }: { reports: any[]; onDone: () => void }) {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">تقاريري</h1>
+      <Button variant="outline" onClick={onSetup}><Globe className="size-4"/>إعداد موقع جديد</Button>
       <Card className="p-5">
         <form onSubmit={submit} className="grid md:grid-cols-[1fr_1fr_auto] gap-3">
-          <Input required dir="ltr" placeholder="example.com" value={url} onChange={(e) => setUrl(e.target.value)} />
+          <select aria-label="الموقع المُعد للتحليل" className="h-10 border rounded-md bg-background px-3 min-w-0" required value={url} onChange={e=>{setUrl(e.target.value);const setup=setups?.find(s=>`https://${s.site}`===e.target.value);const payload=setup?.payload;if(payload&&typeof payload==="object"&&!Array.isArray(payload))setBiz(typeof payload.description==="string"?payload.description:"");}}><option value="">اختر موقعًا مُعدًا للتحليل</option>{setups?.filter(s=>s.completed_at).map(s=><option value={`https://${s.site}`} key={s.id}>{s.site}</option>)}</select>
           <Input required placeholder="نوع النشاط" value={biz} onChange={(e) => setBiz(e.target.value)} />
           <Button disabled={loading} className="bg-gradient-hero">{loading ? <><Loader2 className="size-4 animate-spin" /> جاري الفحص (دقيقة تقريباً)</> : "فحص جديد"}</Button>
         </form>
@@ -271,7 +280,7 @@ function Locked({ name }: { name: string }) {
 
 function Billing({ features }: { features: string[] }) {
   const plans = [
-    { name: "الخطة المجانية", price: "0", items: ["فحص الموقع", "تقارير غير محدودة"], msg: "" },
+    { name: "التجربة المجانية — 7 أيام", price: "0", items: ["إعداد موقعك", "تحليل GEO و SEO", "كاتب المحتوى الذكي"], msg: "" },
     { name: `خطة ${PRICING.plan30.days} يوم — الانطلاق`, price: `${PRICING.plan30.price.toLocaleString("ar-EG")} ${PRICING.plan30.currency}`, items: ["تحليل GEO", "وكيل SEO"], msg: "أريد الاشتراك في خطة الانطلاق" },
     { name: `خطة ${PRICING.plan60.days} يوم — التوسع`, price: `${PRICING.plan60.price.toLocaleString("ar-EG")} ${PRICING.plan60.currency} / شهرياً`, items: ["تحليل GEO", "وكيل SEO", "كاتب المحتوى الذكي"], msg: "أريد الاشتراك في خطة التوسع" },
   ];
