@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
-  validateSearch: (search: Record<string, unknown>) => ({trial: search.trial === true || search.trial === "true"}),
+  validateSearch: (search: Record<string, unknown>): { trial?: boolean } => ({trial: search.trial === true || search.trial === "true"}),
   head: () => ({ meta: [
     { title: "تسجيل الدخول — ظاهرلي" },
     { name: "description", content: "سجّل الدخول إلى ظاهرلي لمتابعة تقارير موقعك وأدوات الظهور في الذكاء الاصطناعي." },
