@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (search: Record<string, unknown>) => ({trial: search.trial === true || search.trial === "true"}),
   head: () => ({ meta: [
     { title: "تسجيل الدخول — ظاهرلي" },
     { name: "description", content: "سجّل الدخول إلى ظاهرلي لمتابعة تقارير موقعك وأدوات الظهور في الذكاء الاصطناعي." },
@@ -23,7 +24,8 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const {trial} = Route.useSearch();
+  const [mode, setMode] = useState<"signin" | "signup">(trial ? "signup" : "signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,10 +48,10 @@ function LoginPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/dashboard" },
+          options: { emailRedirectTo: window.location.origin + "/login" },
         });
         if (error) throw error;
-        toast.success("تم إنشاء الحساب! جاري الدخول...");
+        toast.success("تم إنشاء الحساب؛ راجع بريدك لتأكيده إذا طُلب منك ذلك.");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
